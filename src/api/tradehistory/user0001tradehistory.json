@@ -1,0 +1,25 @@
+[{
+    "stockName": "AAPL",
+    "tradeType": "Buy",
+    "quantity": 50,
+    "totalPrice": 11220,
+    "time": 1570607096201
+},{
+    "stockName": "AAPL",
+    "tradeType": "Sell",
+    "quantity": 10,
+    "totalPrice": -2250,
+    "time": 1570607283567
+},{
+    "stockName": "GOOGL",
+    "tradeType": "Buy",
+    "quantity": 7,
+    "totalPrice": 11901.3,
+    "time": 1570607952259
+},{
+    "stockName": "GOOGL",
+    "tradeType": "Buy",
+    "quantity": 10,
+    "totalPrice": 11901.3,
+    "time": 1570607952259
+}]

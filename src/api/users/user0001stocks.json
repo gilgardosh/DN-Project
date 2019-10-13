@@ -1,0 +1,10 @@
+[
+    {"stockName":"GOOGL",
+        "quantity":17,
+        "investment":23802.6
+    },
+    {"stockName":"AAPL",
+        "quantity":40,
+        "investment":8970
+    }
+]

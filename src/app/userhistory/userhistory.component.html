@@ -1,0 +1,45 @@
+<div class='card'>
+    <div class='card-header'>
+      {{pageTitle}}
+    </div>
+    <div class='card-body'>
+      <div class='table-responsive'>
+        <table class='table'
+               *ngIf='userTrades && userTrades.length'>
+          <thead>
+            <tr>
+              <th>Date and Time</th>
+              <th>Stock Name</th>
+              <th>Trade Type</th> <!--buy or sell-->
+              <th>Quantity</th>
+              <th>Total Price</th>
+              <th>Buy/Sell</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let trade of userTrades'>
+              <td>{{ trade.time | date:'medium' }}</td>
+              <td>
+                <!--<a [routerLink]="['/buysell', trade.tradeNAme]">-->
+                    {{ trade.stockName }}
+                <!--/a>-->
+              </td>
+              <td>{{ trade.tradeType }}</td>
+              <td>{{ trade.quantity }}</td>
+              <td>{{ trade.totalPrice| currency:'USD':'symbol':'1.2-2'}}</td>
+              <td>
+                <button class='btn btn-primary'
+                (click)='null'>
+                button
+                </button> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div *ngIf='errorMessage'
+       class='alert alert-danger'>
+    Error: {{ errorMessage }}
+  </div>
