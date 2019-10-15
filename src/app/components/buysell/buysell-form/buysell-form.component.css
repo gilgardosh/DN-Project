@@ -1,0 +1,9 @@
+:host {
+
+}
+
+
+.buysell-form {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,13 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { UserhistoryComponent } from './userhistory/userhistory.component';
-import { UserwalletComponent } from './userwallet/userwallet.component';
-import { BuysellComponent } from './buysell/buysell.component';
-import { LivestocksComponent } from './livestocks/livestocks.component';
+import { AppRoutingModule } from './app.routing';
+import { BuysellComponent } from './components/buysell/buysell.component';
+import { LivestocksComponent } from './components/livestocks/livestocks.component';
+import { SharedModule } from './shared/shared.module';
+import { UserhistoryComponent } from './components/userhistory/userhistory.component';
+import { UserwalletComponent } from './components/userwallet/userwallet.component';
+import { BuysellFormComponent } from './components/buysell/buysell-form/buysell-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BuysellSelectComponent } from './components/buysell/buysell-select/buysell-select.component';
+
 
 @NgModule({
   declarations: [
@@ -15,18 +19,16 @@ import { LivestocksComponent } from './livestocks/livestocks.component';
     UserhistoryComponent,
     UserwalletComponent,
     BuysellComponent,
-    LivestocksComponent
+    LivestocksComponent,
+    BuysellFormComponent,
+    BuysellSelectComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      { path: 'tradehistory', component: UserhistoryComponent },
-      { path: 'userwallet', component: UserwalletComponent },
-      { path: 'buysell', component: BuysellComponent },
-      { path: '', redirectTo: 'userwallet', pathMatch: 'full' },
-      { path: '**', redirectTo: 'userwallet', pathMatch: 'full' }
-    ])
+    AppRoutingModule,
+    SharedModule,
+    BrowserAnimationsModule
   ],
   bootstrap: [AppComponent]
 })

@@ -1,26 +1,28 @@
 [
-    {
-        "usedID": "user0001",
-        "firstName" : "Gil",
-        "lastName" : "Gardosh",
-        "password" : "gil12345",
-        "email" : "gil@mail.com",
-        "activeStocks" : [
-            {"stockName":"GOOGL",
-                "quantity":17,
-                "investment":23802.6
-            },
-            {"stockName":"AAPL",
-                "quantity":40,
-                "investment":8970
-            }
-        ]
-    },{
-        "usedID": "user0002",
-        "firstName" : "Noy",
-        "lastName" : "Heimann",
-        "password" : "noy12345",
-        "email" : "noy@mail.com",
-        "activeStocks" : []
-    }
+  {
+    "user0001": [{
+      "firstName" : "Gil",
+      "lastName" : "Gardosh",
+      "password" : "gil12345",
+      "email" : "gil@mail.com",
+      "activeStocks" : [
+        {"stockName":"GOOGL",
+          "quantity":17,
+          "investment":23802.6
+        },
+        {"stockName":"AAPL",
+          "quantity":40,
+          "investment":8970
+        }
+      ]
+    }]
+  },{
+    "user0002": [{
+      "firstName" : "Noy",
+      "lastName" : "Heimann",
+      "password" : "noy12345",
+      "email" : "noy@mail.com",
+      "activeStocks" : []
+    }]
+  }
 ]

@@ -12,15 +12,13 @@ import { Component } from '@angular/core';
         </ul>
     </nav>
     <div class='container'>
-      <div class="row">
-        <div class="column">
+        <div class="column left">
           <pm-livestocks></pm-livestocks>
         </div>
-        <div class="column">
+        <div class="column right">
           <router-outlet></router-outlet>
         </div>
-      </div>  
-    
+
     </div>
     `,
   styleUrls: ['./app.component.css']

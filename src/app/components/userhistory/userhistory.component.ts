@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UserTrade } from './usertrade';
-import { UserTradesService } from './userTrades.service';
+import { UserTradesService } from '../../services/user-trades.service';
+import { IUserTradeData } from '../../models/usertrade.interface';
 
 @Component({
   selector: 'pm-userhistory',
@@ -9,10 +9,10 @@ import { UserTradesService } from './userTrades.service';
   styleUrls: ['./userhistory.component.css']
 })
 export class UserhistoryComponent implements OnInit {
-  pageTitle = 'User History';
+  public pageTitle = 'User Trade History';
   errorMessage = '';
 
-  userTrades: UserTrade[] = [];
+  userTrades: IUserTradeData[] = [];
 
   constructor(private userTradesService: UserTradesService) {
 
@@ -22,6 +22,7 @@ export class UserhistoryComponent implements OnInit {
     this.userTradesService.getTrades().subscribe({
       next: userTrades => {
         this.userTrades = userTrades;
+        console.log(this.userTrades)
       },
       error: err => this.errorMessage = err
     });
