@@ -1,38 +1,41 @@
-[
-  {
-    "user0001": [{
+{
+  "user0001": [
+    {
       "stockName": "AAPL",
       "tradeType": "Bought",
       "quantity": 50,
       "totalPrice": 11220,
       "time": 1570607096201
-    },{
+    },
+    {
       "stockName": "AAPL",
       "tradeType": "Sold",
       "quantity": 10,
       "totalPrice": 2250,
       "time": 1570607283567
-    },{
+    },
+    {
       "stockName": "GOOGL",
       "tradeType": "Bought",
       "quantity": 7,
       "totalPrice": 11901.3,
       "time": 1570607952259
-    },{
+    },
+    {
       "stockName": "GOOGL",
       "tradeType": "Bought",
       "quantity": 10,
       "totalPrice": 11901.3,
       "time": 1570607952259
-    }]
-  },
-  {
-    "user0002" : [{
+    }
+  ],
+  "user0002": [
+    {
       "stockName": "AMZN",
       "tradeType": "Bought",
       "quantity": 7,
       "totalPrice": 11938.57,
       "time": 1570608151518
-    }]
-  }
-]
+    }
+  ]
+}

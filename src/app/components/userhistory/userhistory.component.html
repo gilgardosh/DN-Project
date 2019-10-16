@@ -24,7 +24,16 @@
                     {{ trade.stockName }}
                 </a>
               </td>
-              <td>{{ trade.tradeType }}</td>
+              <td>{{ trade.tradeType }}<br>
+                <img *ngIf='(trade.tradeType=="Bought")'
+                  src='./assets/images/buy.gif'
+                  Width=30
+                  Margins=2>
+                <img *ngIf='(trade.tradeType=="Sold")'
+                  src='./assets/images/sell.gif'
+                  Width=30
+                  Margins=2>
+              </td>
               <td>{{ trade.quantity }}</td>
               <td>{{ trade.totalPrice| currency:'USD':'symbol':'1.2-2'}}</td>
               <!-- <td>

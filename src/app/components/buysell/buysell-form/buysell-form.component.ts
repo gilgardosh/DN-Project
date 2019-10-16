@@ -2,7 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface IForm {
-  quantity: string;
+  quantity: number;
+  buysellselector: string;
 
 }
 
@@ -13,6 +14,7 @@ export interface IForm {
 })
 export class BuysellFormComponent implements OnInit {
   form: FormGroup;
+
 
   @Output() valueChanged = new EventEmitter<IForm>();
   constructor() {}
@@ -26,9 +28,12 @@ export class BuysellFormComponent implements OnInit {
     this.form = new FormGroup({
       quantity: new FormControl('0', [
         Validators.required,
-        Validators.minLength(1)
+        Validators.minLength(1),
+        Validators.min(1)
       ]),
-
+      buysellselector: new FormControl('buy',[
+        Validators.required
+      ])
     });
   }
 

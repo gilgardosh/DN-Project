@@ -1,50 +1,49 @@
 
-    <form class="buysell-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-        <p>Sell<mat-slide-toggle checked='true' color='primary'>Buy</mat-slide-toggle></p>
-      <mat-form-field>
-        <input matInput placeholder="Quantity" formControlName="quantity" >
-      </mat-form-field>
-      <button mat-raised-button
-      [disabled]="!isFormValid"
-      color="primary">Carry Out</button>
-    </form>
-
-    <!-- Stock data table, if stock clicked -->
-    <div class='table-responsive'>
-      <table class='table'
-              *ngIf='stockTradeData && stockTradeData.length'>
-        <thead>
-          <tr>
-              <th>Stock</th>
-              <th>Current Value</th>
-              <th>Change</th>
-              <th>%Change</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <h4>
-                {{ stockTradeData.stockSymbol }}
-              </h4>
-              <P>
-                <a [routerLink]="['/buysell', stockstockTradeData.stockName]">
-                  {{ stockTradeData.stockName }}
-                </a>
-              </P>
-            </td>
-            <td>{{ stockTradeData.currentPrice | currency:'USD':'symbol':'1.2-2' }}</td>
-            <td [ngClass]="{stockLoss : 0>(this.stockTradeData.currentPrice-this.stockTradeData.openPrice),
-                            stockGain : (this.stockTradeData.currentPrice-this.stockTradeData.openPrice)>0}">
-              {{ stockTradeData.currentPrice-stockTradeData.openPrice }}</td>
-            <td [ngClass]="{stockLoss : 0>(this.stockTradeData.currentPrice-this.stockTradeData.openPrice),
-                stockGain : (this.stockTradeData.currentPrice-this.stockTradeData.openPrice)>0}">
-                {{ (stockTradeData.currentPrice-stockTradeData.openPrice)/stockTradeData.openPrice | percent }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<form class="buysell-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-radio-group aria-label="Select an option" formControlName="buysellselector">
+    <mat-radio-button selected=true value="buy">Buy</mat-radio-button>
+    <mat-radio-button value="sell">Sell</mat-radio-button>
+  </mat-radio-group>
+  <mat-form-field>
+    <input matInput placeholder="Quantity" formControlName="quantity" >
+  </mat-form-field>
+  <button mat-raised-button
+    [disabled]="!isFormValid"
+    color="primary">Carry Out</button>
+</form>
 
 
-
-
+<div class='table-responsive'>
+  <table class='table'
+          *ngIf='stockTradeData && stockTradeData.length'>
+    <thead>
+      <tr>
+          <th>Stock</th>
+          <th>Current Value</th>
+          <th>Change</th>
+          <th>%Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <h4>
+            {{ stockTradeData.stockSymbol }}
+          </h4>
+          <P>
+            <a [routerLink]="['/buysell', stockstockTradeData.stockName]">
+              {{ stockTradeData.stockName }}
+            </a>
+          </P>
+        </td>
+        <td>{{ stockTradeData.currentPrice | currency:'USD':'symbol':'1.2-2' }}</td>
+        <td [ngClass]="{stockLoss : 0>(this.stockTradeData.currentPrice-this.stockTradeData.openPrice),
+                        stockGain : (this.stockTradeData.currentPrice-this.stockTradeData.openPrice)>0}">
+          {{ stockTradeData.currentPrice-stockTradeData.openPrice }}</td>
+        <td [ngClass]="{stockLoss : 0>(this.stockTradeData.currentPrice-this.stockTradeData.openPrice),
+            stockGain : (this.stockTradeData.currentPrice-this.stockTradeData.openPrice)>0}">
+            {{ (stockTradeData.currentPrice-stockTradeData.openPrice)/stockTradeData.openPrice | percent }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

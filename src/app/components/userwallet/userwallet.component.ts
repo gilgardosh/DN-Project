@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDataService } from '../../services/user-data.service';
 import { IUserData } from 'src/app/models/userdata.interface';
 import { IUserStocks } from 'src/app/models/userstocks.interface';
+import { UserDataService } from '../../services/user-data.service';
 
 @Component({
   selector: 'pm-userwallet',
@@ -21,8 +21,8 @@ export class UserwalletComponent implements OnInit {
     this.userDataService.getUserData().subscribe({
       next: userData => {
         this.userData = userData;
-        console.log(JSON.stringify(this.userData));
-        this.userStocks = (this.userData[0]).activeStocks;
+        console.log('first user values'+JSON.stringify(this.userData));
+        this.userStocks = JSON.parse(JSON.stringify(this.userData.activeStocks)),
         console.log(this.userStocks);
       },
       error: err => this.errorMessage = err

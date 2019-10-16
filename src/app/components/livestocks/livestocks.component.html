@@ -11,7 +11,7 @@
                 <th>Stock</th>
                 <th>Current Value</th>
                 <th>Change</th>
-                <th>%Change</th>
+                <th></th>
                 <th>Trade</th>
             </tr>
           </thead>
@@ -30,10 +30,19 @@
               <td>{{ stock.currentPrice | currency:'USD':'symbol':'1.2-2' }}</td>
               <td [ngClass]="{stockLoss : 0>(this.stock.currentPrice-this.stock.openPrice),
                               stockGain : (this.stock.currentPrice-this.stock.openPrice)>0}">
-                {{ stock.currentPrice-stock.openPrice }}</td>
-              <td [ngClass]="{stockLoss : 0>(this.stock.currentPrice-this.stock.openPrice),
-                  stockGain : (this.stock.currentPrice-this.stock.openPrice)>0}">
-                  {{ (stock.currentPrice-stock.openPrice)/stock.openPrice | percent }}</td>
+                {{ stock.currentPrice-stock.openPrice }}
+                <br>
+                {{ (stock.currentPrice-stock.openPrice)/stock.openPrice | percent }}
+              </td>
+              <td>
+                <img *ngIf='(0>(this.stock.currentPrice-this.stock.openPrice))'
+                  src='./assets/images/loss.gif'
+                  Width=30
+                  Margins=2>
+                <img *ngIf='((this.stock.currentPrice-this.stock.openPrice)>0)'
+                  src='./assets/images/gain.gif'
+                  Width=30
+                  Margins=2>
               <td>
                 <button
                 [routerLink]="['/buysell', stock.stockName]"

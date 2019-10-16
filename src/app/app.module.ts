@@ -1,16 +1,17 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
+import { BuysellFormComponent } from './components/buysell/buysell-form/buysell-form.component';
+import { BuysellSelectComponent } from './components/buysell/buysell-select/buysell-select.component';
 import { BuysellComponent } from './components/buysell/buysell.component';
 import { LivestocksComponent } from './components/livestocks/livestocks.component';
-import { SharedModule } from './shared/shared.module';
 import { UserhistoryComponent } from './components/userhistory/userhistory.component';
 import { UserwalletComponent } from './components/userwallet/userwallet.component';
-import { BuysellFormComponent } from './components/buysell/buysell-form/buysell-form.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BuysellSelectComponent } from './components/buysell/buysell-select/buysell-select.component';
+import { MainInterceptor } from './services/interceptor.service';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -29,6 +30,13 @@ import { BuysellSelectComponent } from './components/buysell/buysell-select/buys
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule
+  ],
+  providers: [
+    {
+      useClass: MainInterceptor,
+      multi: true,
+      provide: HTTP_INTERCEPTORS,
+    }
   ],
   bootstrap: [AppComponent]
 })

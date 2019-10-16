@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription, pipe } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { IForm } from './buysell-form/buysell-form.component';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'pm-buysell',
@@ -12,6 +11,7 @@ import { filter } from 'rxjs/operators';
 export class BuysellComponent implements OnInit, OnDestroy {
   public pageTitle = 'Buy and Sell Stocks';
   private subscription = new Subscription();
+  public stockList = [];
   public stockName: string;
 
   constructor(private router: Router, private route: ActivatedRoute) {}
@@ -25,14 +25,22 @@ export class BuysellComponent implements OnInit, OnDestroy {
   }
 
   initParam$() {
-
-
-    const param$ = this.route.paramMap
-    .subscribe(param => {
+    const param$ = this.route.paramMap.subscribe(param => {
       this.stockName = param.get('stockName');
-      console.log(this.stockName);
+      this.stockList = this.getStocksList();
+      const isIncluded = !!this.stockList.find(
+        stock => stock === this.stockName
+      );
+
+      if (this.stockName && !isIncluded) {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      }
     });
     this.subscription.add(param$);
+  }
+
+  getStocksList() {
+    return ['APPL', 'GOOGL', 'TEMP'];
   }
 
   ngOnDestroy() {

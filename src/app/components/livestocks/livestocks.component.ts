@@ -16,7 +16,7 @@ export class LivestocksComponent implements OnInit {
   constructor(private liveStocksService: LiveStocksService) { }
 
   ngOnInit() {
-    this.liveStocksService.getUserData().subscribe({
+    this.liveStocksService.getLiveStocks().subscribe({
       next: userData => {
         this.liveStocks = userData;
       },

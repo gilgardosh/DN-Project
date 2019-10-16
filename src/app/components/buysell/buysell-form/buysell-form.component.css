@@ -1,9 +1,10 @@
 :host {
 
 }
-
-
 .buysell-form {
   display: flex;
   flex-direction: column;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
 }

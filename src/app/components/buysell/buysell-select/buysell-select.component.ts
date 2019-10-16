@@ -33,7 +33,6 @@ export class BuysellSelectComponent implements OnInit {
     );
   }
 
-
   onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.router.navigate([event.option.value], {
       relativeTo: this.route
