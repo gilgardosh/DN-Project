@@ -1,9 +1,10 @@
-import { IUserStocks } from './userstocks.interface';
 
 export interface IUserData {
-  firstName: string;
-  lastName: string;
-  password: string;
+  created: string;
   email: string;
-  activeStocks: IUserStocks[];
+  first_name: string;
+  last_name: string;
+  last_update: string;
+  password: string;
+  user_id: number;
 }

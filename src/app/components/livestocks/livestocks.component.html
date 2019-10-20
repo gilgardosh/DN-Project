@@ -19,36 +19,36 @@
             <tr *ngFor='let stock of liveStocks'>
               <td>
                 <h4>
-                  {{ stock.stockSymbol }}
+                  {{ stock.stock_symbol }}
                 </h4>
                 <P>
-                  <a [routerLink]="['/buysell', stock.stockName]">
-                    {{ stock.stockName }}
+                  <a [routerLink]="['/buysell', stock.stock_symbol]">
+                    {{ stock.stock_name }}
                   </a>
                 </P>
               </td>
-              <td>{{ stock.currentPrice | currency:'USD':'symbol':'1.2-2' }}</td>
-              <td [ngClass]="{stockLoss : 0>(this.stock.currentPrice-this.stock.openPrice),
-                              stockGain : (this.stock.currentPrice-this.stock.openPrice)>0}">
-                {{ stock.currentPrice-stock.openPrice }}
+              <td>{{ stock.current_price | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td [ngClass]="{stockLoss : 0>(this.stock.current_price-this.stock.open_price),
+                              stockGain : (this.stock.current_price-this.stock.open_price)>0}">
+                {{ stock.current_price-stock.open_price }}
                 <br>
-                {{ (stock.currentPrice-stock.openPrice)/stock.openPrice | percent }}
+                {{ (stock.current_price-stock.open_price)/stock.open_price | percent }}
               </td>
               <td>
-                <img *ngIf='(0>(this.stock.currentPrice-this.stock.openPrice))'
+                <img *ngIf='(0>(this.stock.current_price-this.stock.open_price))'
                   src='./assets/images/loss.gif'
                   Width=30
                   Margins=2>
-                <img *ngIf='((this.stock.currentPrice-this.stock.openPrice)>0)'
+                <img *ngIf='((this.stock.current_price-this.stock.open_price)>0)'
                   src='./assets/images/gain.gif'
                   Width=30
                   Margins=2>
               <td>
                 <button
-                [routerLink]="['/buysell', stock.stockName]"
+                [routerLink]="['/buysell', stock.stock_symbol]"
                 class='btn btn-primary'
                 (click)='null'>
-                buy/Sell
+                Buy/Sell
                 </button>
               </td>
             </tr>

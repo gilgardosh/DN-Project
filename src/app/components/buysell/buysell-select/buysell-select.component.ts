@@ -12,7 +12,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material';
 })
 export class BuysellSelectComponent implements OnInit {
   stockNameEnter = new FormControl();
-  options: string[] = ['APPL', 'GOOGL', 'TEMP'];
+  options: string[] = ['AAPL', 'GOOGL', 'TEMP'];
   filteredOptions: Observable<string[]>;
 
   @Input() stockName: string = '';

@@ -22,7 +22,7 @@
       "kebab-case"
     ],
     "import-blacklist": [
-      true,
+      false,
       "rxjs/Rx"
     ],
     "interface-name": false,

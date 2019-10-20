@@ -18,30 +18,30 @@
           </thead>
           <tbody>
             <tr *ngFor='let trade of userTrades'>
-              <td>{{ trade.time | date:'medium' }}</td>
+              <td>{{ trade.trade_date | date:'medium' }}</td>
               <td>
-                <a [routerLink]="['/buysell', trade.stockName]">
-                    {{ trade.stockName }}
+                <a [routerLink]="['/buysell', trade.stock_symbol]">
+                    {{ trade.stock_name }}
                 </a>
               </td>
-              <td>{{ trade.tradeType }}<br>
-                <img *ngIf='(trade.tradeType=="Bought")'
+              <td>{{ trade.trade_type }}<br>
+                <img *ngIf='(trade.trade_type=="Bought")'
                   src='./assets/images/buy.gif'
                   Width=30
                   Margins=2>
-                <img *ngIf='(trade.tradeType=="Sold")'
+                <img *ngIf='(trade.trade_type=="Sold")'
                   src='./assets/images/sell.gif'
                   Width=30
                   Margins=2>
               </td>
               <td>{{ trade.quantity }}</td>
-              <td>{{ trade.totalPrice| currency:'USD':'symbol':'1.2-2'}}</td>
+              <td>{{ trade.total_price| currency:'USD':'symbol':'1.2-2'}}</td>
               <!-- <td>
                 <button
-                [routerLink]="['/buysell', trade.stockName]"
+                [routerLink]="['/buysell', trade.stock_symbol]"
                 class='btn btn-primary'
                 (click)='null'>
-                button
+                Buy/Sell
                 </button>
               </td> -->
             </tr>

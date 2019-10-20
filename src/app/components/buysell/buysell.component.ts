@@ -40,7 +40,7 @@ export class BuysellComponent implements OnInit, OnDestroy {
   }
 
   getStocksList() {
-    return ['APPL', 'GOOGL', 'TEMP'];
+    return ['AAPL', 'GOOGL', 'TEMP'];
   }
 
   ngOnDestroy() {

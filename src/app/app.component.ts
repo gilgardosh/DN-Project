@@ -1,68 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDataService } from './services/user-data.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState, selectAuthState } from './store/app.states';
+import { LogOut } from './store/actions/auth.actions';
+import { LiveStocksService } from './services/live-stock-data.service';
 
 @Component({
   selector: 'pm-root',
-  template: `
-    <nav class="navbar navbar-expand navbar-light bg-light">
-      <a class="navbar-brand">{{ pageTitle }}</a>
-      <ul class="nav nav-pills">
-        <li>
-          <a
-            class="nav-link"
-            routerLinkActive="active"
-            [routerLink]="['/userwallet']"
-            >My Invetments</a
-          >
-        </li>
-        <li>
-          <a
-            class="nav-link"
-            routerLinkActive="active"
-            [routerLink]="['/tradehistory']"
-            >Trade History</a
-          >
-        </li>
-        <li>
-          <a
-            class="nav-link"
-            routerLinkActive="active"
-            [routerLink]="['/buysell']"
-            >Buy/Sell</a
-          >
-        </li>
-      </ul>
-    </nav>
-    <div class="container">
-      <div class="column left">
-        <router-outlet></router-outlet>
-      </div>
-      <div class="column right">
-        <pm-livestocks></pm-livestocks>
-      </div>
-    </div>
-  `,
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   pageTitle = 'Stocks Trade';
+  getState: Observable<any>;
+  isAuthenticated: false;
+  user = null;
+  errorMessage = null;
 
   constructor(
-    private userDataService: UserDataService
-  ) {
+    private liveStocksService: LiveStocksService,
+    private store: Store<AppState>
 
+  ) {
+      this.getState = this.store.select(selectAuthState);
   }
 
   ngOnInit() {
-    this.initUser();
+    this.getState.subscribe((state) => {
+      this.isAuthenticated = state.isAuthenticated;
+      this.user = state.user;
+      this.errorMessage = state.errorMessage;
+    });
   }
 
-  initUser() {
-    this.userDataService.getUserData()
-    .subscribe(
-      // res => {
-      //   console.log('userloggedin: '+res.firstName+' '+res.lastName);
-      // }
-    );
+  logOut(): void {
+    this.store.dispatch(new LogOut);
   }
 }

@@ -5,11 +5,13 @@
     "password" : "gil12345",
     "email" : "gil@mail.com",
     "activeStocks" : [
-      {"stockName":"GOOGL",
+      {"stockSymbol":"GOOGL",
+        "stockName":"Alphabet.Inc.",
         "quantity":17,
         "investment":23802.6
       },
-      {"stockName":"AAPL",
+      {"stockSymbol":"AAPL",
+        "stockName":"Apple Inc.",
         "quantity":40,
         "investment":8970
       }

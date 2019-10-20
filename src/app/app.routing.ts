@@ -3,10 +3,16 @@ import { UserhistoryComponent } from './components/userhistory/userhistory.compo
 import { BuysellComponent } from './components/buysell/buysell.component';
 import { UserwalletComponent } from './components/userwallet/userwallet.component';
 import { NgModule } from '@angular/core';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'tradehistory', component: UserhistoryComponent },
   { path: 'userwallet', component: UserwalletComponent },
+  { path: 'logout', component: LogoutComponent },
   {
     path: 'buysell',
     component: BuysellComponent,
@@ -16,7 +22,6 @@ const routes: Routes = [
     path: 'buysell/:stockName',
     component: BuysellComponent
   },
-  { path: '', redirectTo: 'userwallet', pathMatch: 'full' }
   // { path: '**', redirectTo: 'userwallet', pathMatch: 'full' }
 ];
 

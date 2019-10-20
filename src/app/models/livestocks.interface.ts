@@ -1,6 +1,6 @@
 export interface ILiveStocks {
-    stockSymbol: string;
-    stockName: string;
-    currentPrice: number;
-    openPrice: number;
+    stock_symbol: string;
+    stock_name: string;
+    current_price: number;
+    open_price: number;
 }

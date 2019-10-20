@@ -1,18 +1,18 @@
 [
   {
-    "stockSymbol": "AAPL",
-    "stockName": "Apple, inc.",
-    "currentPrice": 999,
-    "openPrice": 888
+    "stock_symbol": "AAPL",
+    "stock_name": "Apple, inc.",
+    "current_price": 999,
+    "open_price": 888
   },{
-    "stockSymbol": "GOOGL",
-    "stockName": "Alphabet, Inc.",
-    "currentPrice": 678,
-    "openPrice": 789
+    "stock_symbol": "GOOGL",
+    "stock_name": "Alphabet, Inc.",
+    "current_price": 678,
+    "open_price": 789
   },{
-    "stockSymbol": "TEMP",
-    "stockName": "Temp Stock",
-    "currentPrice": 1111,
-    "openPrice": 1110
+    "stock_symbol": "TEMP",
+    "stock_name": "Temp Stock",
+    "current_price": 1111,
+    "open_price": 1110
   }
 ]

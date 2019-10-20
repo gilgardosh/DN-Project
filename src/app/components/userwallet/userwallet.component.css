@@ -1,0 +1,12 @@
+.table-responsive {
+  min-width: 15rem;
+  min-height: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.table-responsive .mat-spinner {
+  margin: 2rem;
+}

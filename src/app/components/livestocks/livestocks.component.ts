@@ -20,6 +20,7 @@ export class LivestocksComponent implements OnInit {
       next: userData => {
         this.liveStocks = userData;
       },
+
       error: err => this.errorMessage = err
     });
   }

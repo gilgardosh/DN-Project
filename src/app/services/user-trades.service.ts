@@ -17,6 +17,7 @@ export class UserTradesService {
   ) { }
 
   getTrades(): Observable<IUserTradeData[]> {
-    return this.http.onGetTrades(this.userDataService.userId);
+    let userId = this.userDataService.getUserId();
+    return this.http.onGetTrades(userId);
   }
 }

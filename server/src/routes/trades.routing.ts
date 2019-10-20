@@ -3,6 +3,6 @@ import { userTradeHistoryController } from '../controllers/user-trades.controlle
 
 const router: Router = express.Router();
 
-router.get('/:userId', userTradeHistoryController);
+router.post('/', userTradeHistoryController);
 
 export default router;

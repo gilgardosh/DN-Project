@@ -4,38 +4,42 @@
   </div>
   <div class='card-body'>
     <div class='table-responsive'>
-      <table class='table'>
-          <!-- *ngIf='userData && userData.length' -->
-        <thead>
-          <tr>
-            <th>Stock Name</th>
-            <th>Quantity</th>
-            <th>Past Invest</th>
-            <th>Current Value</th>
-            <th>Trade</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor='let stock of userStocks'>
-            <td>
-              <a [routerLink]="['/buysell', stock.stockName]">
-                {{ stock.stockName }}
-              </a>
-            </td>
-            <td>{{ stock.quantity }}</td>
-            <td>{{ stock.investment | currency:'USD':'symbol':'1.2-2'}}</td>
-            <td>not yet</td>
-            <td>
-              <button
-              [routerLink]="['/buysell', stock.stockName]"
-              class='btn btn-primary'
-              (click)='null'>
-              Buy/Sell
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <ng-container *ngIf='userStocks && userStocks.length; else loaderRef'>
+          <table class='table' >
+              <thead>
+                <tr>
+                  <th>Stock Name</th>
+                  <th>Quantity</th>
+                  <th>Past Invest</th>
+                  <th>Current Value</th>
+                  <th>Trade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let stock of userStocks'>
+                  <td>
+                    <a [routerLink]="['/buysell', stock.stock_symbol]">
+                      {{ stock.stock_name }}
+                    </a>
+                  </td>
+                  <td>{{ stock.quantity_owned }}</td>
+                  <td>{{ stock.investment | currency:'USD':'symbol':'1.2-2'}}</td>
+                  <td>not yet</td>
+                  <td>
+                    <button
+                    [routerLink]="['/buysell', stock.stock_symbol]"
+                    class='btn btn-primary'
+                    (click)='null'>
+                    Buy/Sell
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+      </ng-container>
+      <ng-template #loaderRef>
+        <mat-spinner></mat-spinner>
+      </ng-template>
     </div>
   </div>
 </div>

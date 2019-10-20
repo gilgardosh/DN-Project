@@ -1,5 +1,7 @@
 export interface IUserStocks {
-  stockName: string;
-  quantity: number;
+  stock_symbol: string;
+  stock_name: string;
+  quantity_owned: number;
   investment: number;
+  active: boolean;
 }
