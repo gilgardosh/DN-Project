@@ -53,15 +53,14 @@ export class HttpService {
     return this.http.get<ILiveStocks[]>(`/liveStocks`).pipe(
       tap(data => console.log('LiveStocksLog: ' + JSON.stringify(data))),
       catchError(this.handleError)
-      );
+    );
   }
 
   onGetStockslist() {
-    return this.http
-      .get<string[]>(`/stocksList`).pipe(
+    return this.http.get<IHttpRequestHelper<string[]>>(`/stocksList`).pipe(
       // tap(data => console.log('stocks list log: ' + JSON.stringify(data))),
       catchError(this.handleError)
-      );
+    );
   }
 
   private handleError(err: HttpErrorResponse) {

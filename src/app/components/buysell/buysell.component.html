@@ -1,15 +1,22 @@
 <div class="card">
   <div class="card-header">
-    {{pageTitle}}
+    {{ pageTitle }}
   </div>
   <div class="card-body">
     <div class="container-fluid">
       <div class="text-center">
         <ng-container *ngIf="stockName; else autoRef">
-          <pm-buysell-form  (valueChanged)="onValueChanged($event)"></pm-buysell-form>
+          <pm-buysell-form
+            (valueChanged)="onValueChanged($event)"
+          ></pm-buysell-form>
         </ng-container>
         <ng-template #autoRef>
-          <pm-buysell-select [stockName]="stockName"></pm-buysell-select>
+          <ng-container *ngIf="listHasLoaded; else listLoaderRef">
+            <pm-buysell-select [stockName]="stockName"></pm-buysell-select>
+          </ng-container>
+          <ng-template #listLoaderRef>
+            <mat-spinner></mat-spinner>
+          </ng-template>
         </ng-template>
       </div>
     </div>

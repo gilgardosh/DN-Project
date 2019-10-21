@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IForm } from './buysell-form/buysell-form.component';
 import { StocksListService } from 'src/app/services/stockslist.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'pm-buysell',
@@ -12,19 +14,30 @@ import { StocksListService } from 'src/app/services/stockslist.service';
 export class BuysellComponent implements OnInit, OnDestroy {
   public pageTitle = 'Buy and Sell Stocks';
   private subscription = new Subscription();
-  public stockList: string[];
   public stockName: string;
   errorMessage = '';
+  listHasLoaded = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private authService: AuthService,
     private stocksListService: StocksListService
-    ) {}
+  ) {}
 
   ngOnInit() {
     this.initStocksList$();
     this.initParam$();
+    this.isAuthorized$();
+  }
+
+  isAuthorized$() {
+    const auth$ = this.authService.isNotAuthorized
+      .pipe(filter(authStatus => authStatus))
+      .subscribe(notAuth => {
+        console.log('notAuth: ', notAuth);
+      });
+    this.subscription.add(auth$);
   }
 
   onValueChanged(values: IForm) {
@@ -32,8 +45,16 @@ export class BuysellComponent implements OnInit, OnDestroy {
   }
 
   initStocksList$() {
+    this.listHasLoaded = false;
     const param2$ = this.stocksListService.getStocksList().subscribe(list => {
-      this.stockList = list.map(a => a['stock_symbol']);
+      this.listHasLoaded = true;
+      const isIncluded = !!this.stocksListService.stockList.find(
+        stock => stock === this.stockName
+      );
+
+      if (this.stockName && !isIncluded) {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      }
     });
     this.subscription.add(param2$);
   }
@@ -41,13 +62,6 @@ export class BuysellComponent implements OnInit, OnDestroy {
   initParam$() {
     const param$ = this.route.paramMap.subscribe(param => {
       this.stockName = param.get('stockName');
-      const isIncluded = !!this.stockList.find(
-        stock => stock === this.stockName
-      );
-
-      if (this.stockName && !isIncluded) {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      }
     });
     this.subscription.add(param$);
   }

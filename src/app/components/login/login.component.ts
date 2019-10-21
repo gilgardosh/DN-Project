@@ -1,12 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/User';
-import { LogIn } from '../../store/actions/auth.actions';
-import { AppState, selectAuthState } from '../../store/app.states';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 // import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({

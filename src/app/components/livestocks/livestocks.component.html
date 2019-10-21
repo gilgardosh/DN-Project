@@ -1,68 +1,79 @@
-<div class='card'>
-    <div class='card-header'>
-      {{pageTitle}}
-    </div>
-    <div class='card-body'>
-      <div class='table-responsive'>
-        <ng-container *ngIf='liveStocks && liveStocks.length; else loaderRef'>
-          <table class='table'>
-            <thead>
-              <tr>
-                  <th>Stock</th>
-                  <th>Current Value</th>
-                  <th>Change</th>
-                  <th></th>
-                  <th>Trade</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor='let stock of liveStocksService.stocks$ | async'>
-                <td>
-                  <h4>
-                    {{ stock.symbol }}
-                  </h4>
-                  <P>
-                    <a [routerLink]="['/buysell', stock.symbol]">
-                      {{ stock.companyName }}
-                    </a>
-                  </P>
-                </td>
-                <td>{{ stock.latestPrice | currency:'USD':'symbol':'1.2-2' }}</td>
-                <td [ngClass]="{stockLoss : 0>(this.stock.change),
-                                stockGain : (this.stock.change)>0}">
-                  {{ stock.change }}
-                  <br>
-                  {{ stock.changePercent | percent }}
-                </td>
-                <td>
-                  <img *ngIf='(0>(this.stock.change))'
-                    src='./assets/images/loss.gif'
-                    Width=30
-                    Margins=2>
-                  <img *ngIf='((stock.change)>0)'
-                    src='./assets/images/gain.gif'
-                    Width=30
-                    Margins=2>
-                <td>
-                  <button
-                  [routerLink]="['/buysell', stock.symbol]"
-                  class='btn btn-primary'
-                  (click)='null'>
-                  Buy/Sell
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </ng-container>
-        <ng-template #loaderRef>
-          <mat-spinner></mat-spinner>
-        </ng-template>
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <ng-container *ngIf="!!(liveStocks$ | async); else loaderRef">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Stock</th>
+              <th>Current Value</th>
+              <th>Change</th>
+              <th></th>
+              <th>Trade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let stock of liveStocks$ | async">
+              <td>
+                <h4>
+                  {{ stock.symbol }}
+                </h4>
+                <P>
+                  <a [routerLink]="['/buysell', stock.symbol]">
+                    {{ stock.companyName }}
+                  </a>
+                </P>
+              </td>
+              <td>
+                {{ stock.latestPrice | currency: 'USD':'symbol':'1.2-2' }}
+              </td>
+              <td
+                [ngClass]="{
+                  stockLoss: 0 > stock.change,
+                  stockGain: stock.change > 0
+                }"
+              >
+                {{ stock.change }}
+                <br />
+                {{ stock.changePercent | percent }}
+              </td>
+              <td>
+                <img
+                  *ngIf="0 > stock.change"
+                  src="./assets/images/loss.gif"
+                  Width="30"
+                  Margins="2"
+                />
+                <img
+                  *ngIf="stock.change > 0"
+                  src="./assets/images/gain.gif"
+                  Width="30"
+                  Margins="2"
+                />
+              </td>
 
-      </div>
+              <td>
+                <button
+                  [routerLink]="['/buysell', stock.symbol]"
+                  class="btn btn-primary"
+                  (click)="(null)"
+                >
+                  Buy/Sell
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #loaderRef>
+        <mat-spinner></mat-spinner>
+      </ng-template>
     </div>
   </div>
-  <div *ngIf='errorMessage'
-       class='alert alert-danger'>
-    Error: {{ errorMessage }}
-  </div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">
+  Error: {{ errorMessage }}
+</div>

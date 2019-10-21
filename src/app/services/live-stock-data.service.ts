@@ -3,14 +3,12 @@ import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { IAPIStocks } from '../models/apistocks.interface';
-import { ITemp } from '../models/temp.interface';
-import { __values } from 'tslib';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LiveStocksService extends Socket {
-  stocks$ = new BehaviorSubject<IAPIStocks>(null);
+  stocks$ = new BehaviorSubject<IAPIStocks[]>(null);
 
   constructor( ) {
     super({
@@ -23,11 +21,10 @@ export class LiveStocksService extends Socket {
     this.subscribeToMessage('stocksupdate')
     .subscribe(value  => {
       this.stocks$.next(value);
-      console.log(this.stocks$);
     });
    }
 
-  public subscribeToMessage(messageType: string): Observable<any> {
+  public subscribeToMessage(messageType: string): Observable<IAPIStocks[]> {
     return this.fromEvent(messageType);
   }
 }

@@ -8,8 +8,8 @@ import stocksListRouter from './routes/stockslist.routing';
 import { quotes } from './stock';
 import { database } from './util/database.util';
 import { headersController } from './util/headers.util';
-
-
+import { getStocksList } from './util/stocks-list.util';
+import { tokenMiddleware } from './util/middleware/token.middleware';
 
 const app: express.Application = express();
 app.use(urlencoded({ limit: '500mb', extended: true }));
@@ -36,7 +36,10 @@ server.listen(port, () => {
 
       setInterval(async () => {
         try {
-          symbolsLiveData = await quotes(['GOOGL', 'AAPL']);
+          let list = await getStocksList();
+          list = list.map(stockObj => stockObj['stock_symbol']);
+          symbolsLiveData = await quotes(list);
+
           io.emit('stocksupdate', symbolsLiveData);
         } catch (e) {}
       }, 10000);

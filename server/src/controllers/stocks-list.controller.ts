@@ -1,19 +1,12 @@
 import { RequestHandler } from 'express';
 import { responseHelper } from '../util/response.util';
-import { database } from '../util/database.util';
+import { getStocksList } from '../util/stocks-list.util';
 
-
-export const stocksListController: RequestHandler = (req, res, next) => {
-  const query = {
-    name: 'fetch-stocks-list',
-    text: 'select stock_symbol from public.stocks',
-  };
-  database
-    .query(query)
-    .then(data => {
-      res.status(200).json(responseHelper(data).body.rows);
-    })
-    .catch(err => {
-      res.status(401).json(responseHelper(err, false));
-    });
+export const stocksListController: RequestHandler = async (req, res, next) => {
+  try {
+    const data = await getStocksList();
+    res.status(200).json(responseHelper(data));
+  } catch (error) {
+    res.status(401).json(responseHelper(error, false));
+  }
 };

@@ -1,18 +1,18 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { User } from '../models/User';
-import { UserDataService } from './user-data.service';
 import { IUserData } from '../models/userdata.interface';
 import { HttpService } from './http.service';
+import { UserDataService } from './user-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  token: string;
+  private _token: string;
   isAuthorized: Observable<boolean>;
+  isNotAuthorized: Observable<boolean>;
+
   constructor(
     private http: HttpService,
     private userDataService: UserDataService
@@ -20,9 +20,26 @@ export class AuthService {
     this.initIsAuthorized();
   }
 
+  get token() {
+    return this._token;
+  }
+
+  set token(tkn: string) {
+    this._token = tkn;
+    if (tkn) {
+      localStorage.setItem('token', tkn);
+    } else {
+      localStorage.removeItem('token');
+    }
+  }
+
   initIsAuthorized() {
     this.isAuthorized = this.userDataService.user$.pipe(
       map(user => !!user /*  && !!this.token*/)
+    );
+
+    this.isNotAuthorized = this.userDataService.user$.pipe(
+      map(user => !user /*  && !!this.token*/)
     );
   }
 

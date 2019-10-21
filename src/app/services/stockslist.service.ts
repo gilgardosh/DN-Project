@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
-import { map, startWith } from 'rxjs/operators';
-import { initialState } from '../store/reducers/stocks.reducers';
+import { tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StocksListService {
-  // stockList: Observable<string[]>;
+  stockList: string[] = [];
 
   constructor(private http: HttpService) {
     // this.initStocksList();
@@ -21,6 +20,11 @@ export class StocksListService {
   // }
 
   getStocksList(): Observable<string[]> {
-    return this.http.onGetStockslist();
+    return this.http.onGetStockslist().pipe(
+      map(res => res.body),
+      tap(list => {
+        this.stockList = list.map(a => a['stock_symbol']);
+      })
+    );
   }
 }

@@ -15,7 +15,7 @@ export class BuysellSelectComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   stockNameEnter = new FormControl();
   filteredOptions: Observable<string[]>;
-  stockList: string[];
+  stockList: string[] = [];
   errorMessage = '';
 
   @Input() stockName: string = '';
@@ -33,10 +33,11 @@ export class BuysellSelectComponent implements OnInit, OnDestroy {
   }
 
   initStocksList$() {
-    const param$ = this.stocksListService.getStocksList().subscribe(list => {
-      this.stockList = list.map(a => a['stock_symbol']);
-    });
-    this.subscription.add(param$);
+    // const param$ = this.stocksListService.getStocksList().subscribe(list => {
+    //   this.stockList = list.map(a => a['stock_symbol']);
+    // });
+    // this.subscription.add(param$);
+    this.stockList = this.stocksListService.stockList;
   }
 
   getStocksList() {

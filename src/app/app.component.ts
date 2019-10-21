@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { LiveStocksService } from './services/live-stock-data.service';
-import { LogOut } from './store/actions/auth.actions';
-import { AppState, selectAuthState } from './store/app.states';
-import { UserDataService } from './services/user-data.service';
 import { AuthService } from './services/auth.service';
+import { LiveStocksService } from './services/live-stock-data.service';
 
 @Component({
   selector: 'pm-root',
@@ -25,7 +20,9 @@ export class AppComponent implements OnInit {
     public authService: AuthService
   ) {}
 
-  ngOnInit() { }
+  ngOnInit() { 
+  }
+
 
   logOut(): void {
     this.authService.logOut();
