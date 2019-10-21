@@ -13,7 +13,6 @@ import { AppRoutingModule } from './app.routing';
 import { BuysellFormComponent } from './components/buysell/buysell-form/buysell-form.component';
 import { BuysellSelectComponent } from './components/buysell/buysell-select/buysell-select.component';
 import { BuysellComponent } from './components/buysell/buysell.component';
-import { HomeComponent } from './components/home/home.component';
 import { LivestocksComponent } from './components/livestocks/livestocks.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component'; // Angular CLI environment
@@ -36,7 +35,6 @@ import { SharedModule } from './shared/shared.module';
     BuysellFormComponent,
     BuysellSelectComponent,
     LoginComponent,
-    HomeComponent,
     SignupComponent
   ],
   imports: [

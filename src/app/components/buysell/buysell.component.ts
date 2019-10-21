@@ -14,7 +14,7 @@ import { filter } from 'rxjs/operators';
 export class BuysellComponent implements OnInit, OnDestroy {
   public pageTitle = 'Buy and Sell Stocks';
   private subscription = new Subscription();
-  public stockName: string;
+  public stockSymbol: string;
   errorMessage = '';
   listHasLoaded = false;
 
@@ -28,17 +28,17 @@ export class BuysellComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initStocksList$();
     this.initParam$();
-    this.isAuthorized$();
+    // this.isAuthorized$();
   }
 
-  isAuthorized$() {
-    const auth$ = this.authService.isNotAuthorized
-      .pipe(filter(authStatus => authStatus))
-      .subscribe(notAuth => {
-        console.log('notAuth: ', notAuth);
-      });
-    this.subscription.add(auth$);
-  }
+  // isAuthorized$() {
+  //   const auth$ = this.authService.isNotAuthorized
+  //     .pipe(filter(authStatus => authStatus))
+  //     .subscribe(notAuth => {
+  //       console.log('notAuth: ', notAuth);
+  //     });
+  //   this.subscription.add(auth$);
+  // }
 
   onValueChanged(values: IForm) {
     console.log('value is here: ', values);
@@ -49,10 +49,10 @@ export class BuysellComponent implements OnInit, OnDestroy {
     const param2$ = this.stocksListService.getStocksList().subscribe(list => {
       this.listHasLoaded = true;
       const isIncluded = !!this.stocksListService.stockList.find(
-        stock => stock === this.stockName
+        stock => stock === this.stockSymbol
       );
 
-      if (this.stockName && !isIncluded) {
+      if (this.stockSymbol && !isIncluded) {
         this.router.navigate(['../'], { relativeTo: this.route });
       }
     });
@@ -61,7 +61,7 @@ export class BuysellComponent implements OnInit, OnDestroy {
 
   initParam$() {
     const param$ = this.route.paramMap.subscribe(param => {
-      this.stockName = param.get('stockName');
+      this.stockSymbol = param.get('stockSymbol');
     });
     this.subscription.add(param$);
   }

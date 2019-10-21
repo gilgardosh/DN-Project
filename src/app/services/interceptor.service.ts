@@ -19,7 +19,6 @@ export class MainInterceptor implements HttpInterceptor {
     //   url: environment.BASE_URL + req.url
     // });
 
-    
     return next.handle(req);
   }
 }

@@ -5,10 +5,12 @@ import loginRouter from './routes/login.routing';
 import tradesRouter from './routes/trades.routing';
 import userStocksRouter from './routes/userstocks.routing';
 import stocksListRouter from './routes/stockslist.routing';
+import transactionRouter from './routes/transaction.routing';
 import { quotes } from './stock';
 import { database } from './util/database.util';
 import { headersController } from './util/headers.util';
 import { getStocksList } from './util/stocks-list.util';
+
 import { tokenMiddleware } from './util/middleware/token.middleware';
 
 const app: express.Application = express();
@@ -20,6 +22,7 @@ app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/tradeHistory', tradesRouter);
 app.use('/api/v1/userStocks', userStocksRouter);
 app.use('/api/v1/stocksList', stocksListRouter);
+app.use('/api/v1/transaction', transactionRouter);
 
 const port = process.env.PORT || 4040;
 const server = require('http').createServer(app);

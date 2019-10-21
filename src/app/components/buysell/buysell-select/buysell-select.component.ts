@@ -5,6 +5,7 @@ import { startWith, map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { StocksListService } from 'src/app/services/stockslist.service';
+import { BuysellComponent } from '../buysell.component';
 
 @Component({
   selector: 'pm-buysell-select',
@@ -13,12 +14,12 @@ import { StocksListService } from 'src/app/services/stockslist.service';
 })
 export class BuysellSelectComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
-  stockNameEnter = new FormControl();
+  stockSymbolEnter = new FormControl();
   filteredOptions: Observable<string[]>;
   stockList: string[] = [];
   errorMessage = '';
 
-  @Input() stockName: string = '';
+  @Input() stockSymbol: string = '';
 
   constructor(
     private router: Router,
@@ -33,10 +34,6 @@ export class BuysellSelectComponent implements OnInit, OnDestroy {
   }
 
   initStocksList$() {
-    // const param$ = this.stocksListService.getStocksList().subscribe(list => {
-    //   this.stockList = list.map(a => a['stock_symbol']);
-    // });
-    // this.subscription.add(param$);
     this.stockList = this.stocksListService.stockList;
   }
 
@@ -51,7 +48,7 @@ export class BuysellSelectComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    this.filteredOptions = this.stockNameEnter.valueChanges.pipe(
+    this.filteredOptions = this.stockSymbolEnter.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
     );

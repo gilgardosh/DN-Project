@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BuysellComponent } from './components/buysell/buysell.component';
-import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { UserhistoryComponent } from './components/userhistory/userhistory.component';
@@ -10,7 +9,7 @@ import { AuthGuard } from './services/guards/auth.guard';
 import { UnauthGuard } from './services/guards/un-auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'tradehistory', pathMatch: 'full' },
+  { path: '', redirectTo: 'userwallet', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [UnauthGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [UnauthGuard] },
   {
@@ -30,7 +29,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'buysell/:stockName',
+    path: 'buysell/:stockSymbol',
     component: BuysellComponent,
     canActivate: [AuthGuard]
   },

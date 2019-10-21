@@ -1,19 +1,10 @@
-import { Injectable, Injector } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpErrorResponse,
-  HttpEventType,
-  HttpResponse,
-  HttpHeaders
-} from '@angular/common/http';
-import { AuthService } from './auth.service';
-import { Observable } from 'rxjs';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +21,6 @@ export class TokenInterceptor implements HttpInterceptor {
     const options: any = {};
     options.url = environment.BASE_URL + request.url;
 
-    
     if (token) {
       options.headers = request.headers.set('Authorization', `Bearer ${token}`);
     }

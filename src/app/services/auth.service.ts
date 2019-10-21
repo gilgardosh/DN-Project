@@ -4,6 +4,7 @@ import { map, tap } from 'rxjs/operators';
 import { IUserData } from '../models/userdata.interface';
 import { HttpService } from './http.service';
 import { UserDataService } from './user-data.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
 
   constructor(
     private http: HttpService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private router: Router
   ) {
     this.initIsAuthorized();
   }
@@ -68,5 +70,6 @@ export class AuthService {
   logOut() {
     this.userDataService.cleanUserData();
     this.token = '';
+    this.router.navigate(['/userwallet']);
   }
 }

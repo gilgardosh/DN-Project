@@ -20,9 +20,8 @@ export class AppComponent implements OnInit {
     public authService: AuthService
   ) {}
 
-  ngOnInit() { 
+  ngOnInit() {
   }
-
 
   logOut(): void {
     this.authService.logOut();

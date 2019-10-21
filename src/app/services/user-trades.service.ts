@@ -9,6 +9,7 @@ import { UserDataService } from './user-data.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserTradesService {
 
   constructor(

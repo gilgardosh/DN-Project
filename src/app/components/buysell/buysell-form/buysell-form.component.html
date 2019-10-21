@@ -1,72 +1,96 @@
-<div class='table-responsive'>
-    <table class='table'
-            *ngIf='!!stockTradeData'>
-      <thead>
-          <tr>
-              <th>Stock</th>
-              <th>Current Value</th>
-              <th>Change</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <h4>
-                {{ stockTradeData.stock_symbol }}
-              </h4>
-              <P>
-                <a [routerLink]="['/buysell', stockTradeData.stock_name]">
-                  {{ stockTradeData.stock_name }}
-                </a>
-              </P>
-            </td>
-            <td>{{ stockTradeData.current_price | currency:'USD':'symbol':'1.2-2' }}</td>
-            <td [ngClass]="{stockLoss : 0>(this.stockTradeData.current_price-this.stockTradeData.open_price),
-                            stockGain : (this.stockTradeData.current_price-this.stockTradeData.open_price)>0}">
-              {{ stockTradeData.current_price-stockTradeData.open_price }}
-              <br>
-              {{ (stockTradeData.current_price-stockTradeData.open_price)/stockTradeData.open_price | percent }}
-            </td>
-          </tr>
-        </tbody>
-    </table>
-    <table class='table'
-    *ngIf='stockTradeData.quantity_owned>0'>
-      <thead>
-        <tr>
-            <th>Owned</th>
-            <th>Past Invest</th>
-            <th>Current Val.</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            {{ stockTradeData.quantity_owned }}
-          </td>
-          <td>{{ stockTradeData.pastInvest | currency:'USD':'symbol':'1.2-2' }}</td>
-          <td [ngClass]="{stockLoss : stockTradeData.pastInvest>(stockTradeData.quantity_owned*stockTradeData.current_price),
-                          stockGain : (stockTradeData.quantity_owned*stockTradeData.current_price)>stockTradeData.pastInvest}">
-            {{ stockTradeData.quantity_owned*stockTradeData.current_price | currency:'USD':'symbol':'1.2-2' }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="table-responsive">
+  <table class="table" *ngIf="!!stockData">
+    <thead>
+      <tr>
+        <th>Stock</th>
+        <th>Current Value</th>
+        <th>Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <h4>
+            {{ stockSymbol }}
+          </h4>
+          <P>
+            {{ stockData.stock_name }}
+          </P>
+        </td>
+        <td>
+          {{ stockData.current_price | currency: 'USD':'symbol':'1.2-2' }}
+        </td>
+        <td
+          [ngClass]="{
+            stockLoss:
+              0 >
+              stockData.current_price -
+              stockData.open_price,
+            stockGain:
+              stockData.current_price -
+              stockData.open_price
+              > 0
+          }"
+        >
+          {{ stockData.change }}
+          <br />
+          {{
+            stockData.change_percent | percent
+          }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table" *ngIf="stockData.quantity_owned > 0">
+    <thead>
+      <tr>
+        <th>Owned</th>
+        <th>Past Invest</th>
+        <th>Current Val.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          {{ stockData.quantity_owned }}
+        </td>
+        <td>
+          {{ stockData.pastInvest | currency: 'USD':'symbol':'1.2-2' }}
+        </td>
+        <td
+          [ngClass]="{
+            stockLoss:
+              stockData.pastInvest >
+              stockData.quantity_owned * stockData.current_price,
+            stockGain:
+              stockData.quantity_owned * stockData.current_price >
+              stockData.pastInvest
+          }"
+        >
+          {{
+            stockData.quantity_owned * stockData.current_price
+              | currency: 'USD':'symbol':'1.2-2'
+          }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <form class="buysell-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-radio-group aria-label="Select an option" formControlName="buysellselector" *ngIf='stockTradeData.quantity_owned>0'>
-    <mat-radio-button selected=true value="buy">Buy</mat-radio-button>
+    <mat-radio-group
+    aria-label="Select an option"
+    formControlName="buysellselector"
+    *ngIf="stockData.quantity_owned > 0"
+  >
+    <mat-radio-button selected="true" value="buy">Buy</mat-radio-button>
     <mat-radio-button value="sell">Sell</mat-radio-button>
   </mat-radio-group>
-  <p *ngIf='stockTradeData.quantity_owned==0'>Buy:</p>
+  <p *ngIf="stockData.quantity_owned == 0">Buy:</p>
   <mat-form-field>
-    <input matInput placeholder="Quantity" formControlName="quantity" >
+    <input matInput placeholder="Quantity" formControlName="quantity" />
   </mat-form-field>
-  <!-- <div *ngIf="form.errors.quantityOK" class="cross-validation-error-message alert alert-danger">
-    Name cannot match alter ego.
-</!-->
-  <button mat-raised-button
-    [disabled]="!isFormValid"
-    color="primary">Carry Out</button>
+  <button mat-raised-button [disabled]="!isFormValid" color="primary">
+    Carry Out
+  </button>
 </form>

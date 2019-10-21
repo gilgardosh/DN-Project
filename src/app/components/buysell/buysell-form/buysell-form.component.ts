@@ -1,11 +1,21 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
+import { LiveStocksService } from 'src/app/services/live-stock-data.service';
+import { BuysellComponent } from '../buysell.component';
 import { IStockTradeData } from 'src/app/models/stocktradedata.interface';
-import { StockTradeDataService } from 'src/app/services/stock-trade-data.service';
+import { TransactionService } from 'src/app/services/transaction.service';
 
 export interface IForm {
   quantity: number;
   buysellselector: string;
+  formStockSymbol: string;
+  formTotalPrice: number;
 }
 
 @Component({
@@ -15,72 +25,88 @@ export interface IForm {
 })
 export class BuysellFormComponent implements OnInit {
   form: FormGroup;
-  stockTradeData: IStockTradeData;
-  errorMessage = '';
-
+  stockSymbol: string;
+  stockData: IStockTradeData = {
+    stock_symbol: 'AAPL',
+    stock_name: 'Apple, Inc.',
+    current_price: 240.6,
+    change: 4.09,
+    change_percent: 0.02,
+    quantity_owned: 10,
+    pastInvest: 2000
+  };
 
   @Output() valueChanged = new EventEmitter<IForm>();
 
-  constructor(private stockTradeDataService: StockTradeDataService) {}
+  constructor(
+    private buysellComponent: BuysellComponent,
+    public liveStocksService: LiveStocksService,
+    private transactionService: TransactionService
+  ) {}
 
   ngOnInit() {
+    this.getStockSymbol();
+    console.log(this.stockSymbol);
     this.initForm();
-    this.initStockTrade('GOOGL');           // change to selectable stock symbol
   }
 
-  initStockTrade (stock_symbol: string) {
-    // this.stockTradeDataService.getStockTradeData(stock_symbol)
-    // .subscribe({
-    //   next: data => {
-    //     this.stockTradeData = data;
-    //     console.log('Data for buy/sell stock: ' + JSON.stringify(this.stockTradeData));
-    //   },
-    //   error: err => this.errorMessage = err
-    // });
-    const tempStock = {
-      stock_symbol: "GOOGL",
-      stock_name: 'Alphabet, Inc',
-      current_price: 356,
-      open_price: 26345,
-      quantity_owned: 34,
-      pastInvest: 200,
-    };
-    this.stockTradeData = tempStock;
+  getStockSymbol() {
+    this.stockSymbol = this.buysellComponent.stockSymbol;
   }
+
+  // from now on - Form stuff
 
   initForm() {
-    this.form = new FormGroup({
-      buysellselector: new FormControl('buy',[
-        Validators.required
-      ]),
-      quantity: new FormControl('0', [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.min(1),
-      ])
-    }, { validators: this.quantityOKvalidator });
+    this.form = new FormGroup(
+      {
+        buysellselector: new FormControl('buy', [Validators.required]),
+        quantity: new FormControl('0', [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.min(1)
+        ]),
+        formStockSymbol: new FormControl(this.stockSymbol),
+        formTotalPrice: new FormControl(this.stockData.current_price)
+      },
+      { validators: this.quantityOKvalidator }
+    );
   }
 
-  quantityOKvalidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+  quantityOKvalidator: ValidatorFn = (
+    control: FormGroup
+  ): ValidationErrors | null => {
     const quantity = control.get('quantity');
     const buysellselector = control.get('buysellselector');
     const regex = /^[0-9]+$/;
-    const value = quantity.value.trim()
-    return (value.match(regex))   // is quantity number validation
-          && quantity
-          && buysellselector
-          && ((buysellselector.value === 'sell')
-                && (quantity.value > this.stockTradeData.quantity_owned)
-                ? false : true) // sell quantity validation
-          ? null : {Error};
-  }
+    const value = quantity.value.trim();
+    return value.match(regex) && // is quantity a number validation
+      quantity &&
+      buysellselector &&
+      (buysellselector.value === 'sell' &&
+      quantity.value > this.stockData.quantity_owned
+        ? false
+        : true) // sell quantity validation
+      ? null
+      : { Error };
+  };
 
   get isFormValid() {
     return this.form.valid;
   }
 
   onSubmit() {
+    this.form.value.quantity = Number(this.form.value.quantity);
+    this.form.value.formTotalPrice =
+      this.form.value.formTotalPrice * this.form.value.quantity;
+    this.form.value.formStockSymbol = this.stockSymbol;
     console.log(this.form.value);
+    const TEMP = this.transactionService.makeTransaction(
+      this.form.value.formStockSymbol,
+      this.form.value.buysellselector,
+      this.form.value.quantity,
+      this.form.value.formTotalPrice
+    );
+    console.log(TEMP)
     this.valueChanged.emit(this.form.value);
   }
 }

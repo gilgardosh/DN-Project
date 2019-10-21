@@ -20,6 +20,7 @@ export class HttpService {
 
   onLogin(body) {
     const url = `/login`;
+    console.log(body);
     return this.http.post<IHttpRequestHelper<IUserData>>(url, body);
   }
 
@@ -49,18 +50,39 @@ export class HttpService {
       .pipe(catchError(this.handleError));
   }
 
-  onGetLiveStocks() {
-    return this.http.get<ILiveStocks[]>(`/liveStocks`).pipe(
-      tap(data => console.log('LiveStocksLog: ' + JSON.stringify(data))),
-      catchError(this.handleError)
-    );
-  }
+  // onGetLiveStocks() {
+  //   return this.http.get<ILiveStocks[]>(`/liveStocks`).pipe(
+  //     tap(data => console.log('LiveStocksLog: ' + JSON.stringify(data))),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   onGetStockslist() {
     return this.http.get<IHttpRequestHelper<string[]>>(`/stocksList`).pipe(
       // tap(data => console.log('stocks list log: ' + JSON.stringify(data))),
       catchError(this.handleError)
     );
+  }
+
+  onMakeTransaction(
+    stockSymbol: string,
+    buyOrSell: string,
+    quantity: number,
+    totalPrice: number,
+    userId: number
+  ) {
+    const body = {
+      stockSymbol,
+      buyOrSell,
+      quantity,
+      totalPrice,
+      userId
+    };
+    console.log(body);
+
+    return this.http
+      .post<any>(`/transaction`, body)
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(err: HttpErrorResponse) {

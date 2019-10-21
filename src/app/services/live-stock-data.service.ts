@@ -3,6 +3,7 @@ import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { IAPIStocks } from '../models/apistocks.interface';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,21 @@ export class LiveStocksService extends Socket {
   public subscribeToMessage(messageType: string): Observable<IAPIStocks[]> {
     return this.fromEvent(messageType);
   }
+
+  // public stockLiveData(stockSymbol) {
+  //   let index: IAPIStocks[];
+  //   const AAAA$ = this.stocks$.pipe(
+  //     tap(stocks => {
+  //       // console.log(stocks);
+  //       if (!!stocks && !!stockSymbol) {
+  //         index = stocks.filter(item => {
+  //           return (item.symbol === stockSymbol);
+  //         });
+  //         console.log(index[0]);
+  //       }
+  //     })
+  //   );
+  //   console.log(index[0]);
+  //   return (index[0]);
+  // }
 }
