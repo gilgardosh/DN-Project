@@ -1,27 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-
-import { ILiveStocks } from '../../models/livestocks.interface';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LiveStocksService } from '../../services/live-stock-data.service';
+import { Subscription, Observable } from 'rxjs';
+import { IAPIStocks } from 'src/app/models/apistocks.interface';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'pm-livestocks',
   templateUrl: './livestocks.component.html',
   styleUrls: ['./livestocks.component.css']
 })
-export class LivestocksComponent implements OnInit {
+export class LivestocksComponent implements OnInit, OnDestroy {
   public pageTitle = 'Live Stocks Update';
+  private subscription = new Subscription();
   errorMessage = '';
+  liveStocks$: Observable<IAPIStocks>;
 
-  liveStocks: ILiveStocks[] = [];
-  constructor(private liveStocksService: LiveStocksService) { }
+  constructor(public liveStocksService: LiveStocksService) { }
 
   ngOnInit() {
-    this.liveStocksService.getLiveStocks().subscribe({
-      next: userData => {
-        this.liveStocks = userData;
-      },
+    this.initStocksLive();
+  }
 
-      error: err => this.errorMessage = err
-    });
+  initStocksLive() {
+
+  }
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -6,10 +6,12 @@ import { NgModule } from '@angular/core';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'tradehistory', component: UserhistoryComponent },
   { path: 'userwallet', component: UserwalletComponent },
   { path: 'logout', component: LogoutComponent },
@@ -22,7 +24,7 @@ const routes: Routes = [
     path: 'buysell/:stockName',
     component: BuysellComponent
   },
-  // { path: '**', redirectTo: 'userwallet', pathMatch: 'full' }
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({

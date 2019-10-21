@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.states';
-import { Router } from '@angular/router';
-import { LogOut } from 'src/app/store/actions/auth.actions';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'pm-logout',
@@ -15,6 +15,7 @@ export class LogoutComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private router: Router,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -22,6 +23,6 @@ export class LogoutComponent implements OnInit {
   }
 
   logOut(): void {
-    this.store.dispatch(new LogOut);
+    this.authService.logOut();
   }
 }

@@ -1,4 +1,4 @@
-import { User } from '../../models/user';
+import { User } from '../../models/User';
 import { StocksActionTypes, All } from '../actions/stocks.actions';
 import { State } from '@ngrx/store';
 import { ILiveStocks } from 'src/app/models/livestocks.interface';

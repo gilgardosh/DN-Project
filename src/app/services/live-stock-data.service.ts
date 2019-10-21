@@ -1,23 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ILiveStocks } from '../models/livestocks.interface';
-import { HttpService } from './http.service';
 import { Socket } from 'ngx-socket-io';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { Store } from '@ngrx/store';
-import { AppState } from '../store/app.states';
-import { Update } from '../store/actions/stocks.actions';
+import { IAPIStocks } from '../models/apistocks.interface';
+import { ITemp } from '../models/temp.interface';
+import { __values } from 'tslib';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LiveStocksService extends Socket {
+  stocks$ = new BehaviorSubject<IAPIStocks>(null);
 
-
-  constructor(
-    private http: HttpService,
-    private store: Store<AppState>
-  ) {
+  constructor( ) {
     super({
       url: environment.SERVER,
       options: {
@@ -25,61 +20,14 @@ export class LiveStocksService extends Socket {
         transport : ['websocket']
       }
     });
-    this.subscribeToMessage('stocksupdate').subscribe(stocks => {
-      this.store.dispatch(new Update(stocks));
+    this.subscribeToMessage('stocksupdate')
+    .subscribe(value  => {
+      this.stocks$.next(value);
+      console.log(this.stocks$);
     });
-
    }
 
-  public subscribeToMessage(messageType: string): Observable<ILiveStocks[]> {
+  public subscribeToMessage(messageType: string): Observable<any> {
     return this.fromEvent(messageType);
   }
-
-  getLiveStocks(): Observable<ILiveStocks[]> {
-    return this.http.onGetLiveStocks();
-  }
-
-  getSpecLiveStock(): Observable<ILiveStocks[]> {
-    return this.http.onGetLiveStocks();
-  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { Injectable } from '@angular/core';
-// import { Observable } from 'rxjs';
-// import { ILiveStocks } from '../models/livestocks.interface';
-// import { HttpService } from './http.service';
-
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class LiveStocksService {
-
-
-//   constructor(private http: HttpService,
-//     ) { }
-
-//   getLiveStocks(): Observable<ILiveStocks[]> {
-//     return this.http.onGetLiveStocks();
-//   }
-
-//   getSpecLiveStock(): Observable<ILiveStocks[]> {
-//     return this.http.onGetLiveStocks();
-//   }
-// }

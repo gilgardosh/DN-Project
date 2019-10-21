@@ -2,7 +2,8 @@
 const iex = require('iexcloud_api_wrapper');
 
 export const quote = (sym: string) => {
-  return iex.quote(sym);
+  const sender = iex.quote(sym);
+  return sender;
 };
 
 export const quotes = (symbols: string[]) => {

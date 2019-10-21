@@ -20,6 +20,7 @@ export class StocksEffects {
     private actions: Actions,
   ) {}
 
+
   @Effect()
   Update: Observable<any> = this.actions.pipe(
     ofType(StocksActionTypes.NEW_STOCKS),

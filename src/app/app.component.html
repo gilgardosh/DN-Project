@@ -1,56 +1,64 @@
-    <nav class="navbar navbar-expand navbar-light bg-light">
-        <a class="navbar-brand">{{ pageTitle }}</a>
-        <ul class="nav nav-pills">
-          <li *ngIf='isAuthenticated'>
-            <a
-              class="nav-link"
-              routerLinkActive="active"
-              [routerLink]="['/userwallet']"
-              >My Invetments</a
-            >
-          </li>
-          <li *ngIf='isAuthenticated'>
-            <a
-              class="nav-link"
-              routerLinkActive="active"
-              [routerLink]="['/tradehistory']"
-              >Trade History</a
-            >
-          </li>
-          <li *ngIf='isAuthenticated'>
-            <a
-              class="nav-link"
-              routerLinkActive="active"
-              [routerLink]="['/buysell']"
-              >Buy/Sell</a
-            >
-          </li>
-          <li *ngIf='isAuthenticated'>
-              <a
-                class="nav-link"
-                routerLinkActive="active"
-                [routerLink]="['/logout']"
-                >Logout</a
-              >
-            </li>
-          <li *ngIf='!isAuthenticated'>
-            <a
-              class="nav-link"
-              routerLinkActive="active"
-              [routerLink]="['/login']"
-              >login</a
-            >
-          </li>
-        </ul>
-      </nav>
-      <div class="container">
-          <router-outlet></router-outlet>
-        <!-- <div class="column left">
-
-        </div>
-        <div class="column right">
-          <pm-livestocks></pm-livestocks>
-        </div> -->
-      </div>
-
-
+<nav class="navbar navbar-expand navbar-light bg-light">
+  <a class="navbar-brand">{{ pageTitle }}</a>
+  <ul class="nav nav-pills">
+    <ng-container *ngIf="authService.isAuthorized | async; else isNotAuthRef">
+      <li>
+        <a
+          class="nav-link"
+          routerLinkActive="active"
+          [routerLink]="['/livestocks']"
+          >livestocks</a
+        >
+      </li>
+      <li>
+        <a
+          class="nav-link"
+          routerLinkActive="active"
+          [routerLink]="['/userwallet']"
+          >My Invetments</a
+        >
+      </li>
+      <li>
+        <a
+          class="nav-link"
+          routerLinkActive="active"
+          [routerLink]="['/tradehistory']"
+          >Trade History</a
+        >
+      </li>
+      <li>
+        <a
+          class="nav-link"
+          routerLinkActive="active"
+          [routerLink]="['/buysell']"
+          >Buy/Sell</a
+        >
+      </li>
+      <li>
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/logout']"
+          >Logout</a
+        >
+      </li>
+    </ng-container>
+    <ng-template #isNotAuthRef>
+      <li>
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/login']"
+          >login</a
+        >
+      </li>
+      <li>
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/signup']"
+          >signup</a
+        >
+      </li>
+    </ng-template>
+  </ul>
+</nav>
+<div class="container">
+  <div class="column left">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="column right">
+    <pm-livestocks></pm-livestocks>
+  </div>
+</div>

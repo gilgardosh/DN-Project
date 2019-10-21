@@ -7,21 +7,25 @@ import { IUserData } from '../models/userdata.interface';
 import { IUserStocks } from '../models/userstocks.interface';
 import { IUserTradeData } from '../models/usertrade.interface';
 
+export interface IHttpRequestHelper<T> {
+  isValid: boolean;
+  body: T;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
   constructor(private http: HttpClient) {}
 
-  onGetUserData(email: string, password: string) {
-    const body = {
-      email,
-      password
-    };
+  onLogin(body) {
+    const url = `/login`;
+    return this.http.post<IHttpRequestHelper<IUserData>>(url, body);
+  }
 
-    return this.http
-      .post<IUserData>(`/users`, body)
-      .pipe(catchError(this.handleError));
+  onSignUp(body) {
+    const url = `/signUp`;
+    return this.http.post<IHttpRequestHelper<IUserData>>(url, body);
   }
 
   onGetUserStocks(userId: number, stock_symbol: string) {
@@ -49,7 +53,15 @@ export class HttpService {
     return this.http.get<ILiveStocks[]>(`/liveStocks`).pipe(
       tap(data => console.log('LiveStocksLog: ' + JSON.stringify(data))),
       catchError(this.handleError)
-    );
+      );
+  }
+
+  onGetStockslist() {
+    return this.http
+      .get<string[]>(`/stocksList`).pipe(
+      // tap(data => console.log('stocks list log: ' + JSON.stringify(data))),
+      catchError(this.handleError)
+      );
   }
 
   private handleError(err: HttpErrorResponse) {

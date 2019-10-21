@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IUserStocks } from 'src/app/models/userstocks.interface';
 import { UserStocksService } from 'src/app/services/user-stocks.service';
+import { reducers } from 'src/app/store/app.states';
+import { LogInSuccess } from 'src/app/store/actions/auth.actions';
 
 @Component({
   selector: 'pm-userwallet',
@@ -17,6 +19,7 @@ export class UserwalletComponent implements OnInit {
 
   ngOnInit(): void {
     this.initStocks();
+    console.log('reduce: '+LogInSuccess)
   }
 
   initStocks() {

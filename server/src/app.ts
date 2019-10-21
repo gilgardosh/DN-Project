@@ -1,46 +1,31 @@
-import express from 'express';
 import { json, urlencoded } from 'body-parser';
-import { headersController } from './util/headers.util';
-import usersRouter from './routes/users.routing';
+import express from 'express';
+import { Socket } from 'socket.io';
+import loginRouter from './routes/login.routing';
 import tradesRouter from './routes/trades.routing';
 import userStocksRouter from './routes/userstocks.routing';
-import liveStocksRouter from './routes/livestocks.routing';
-import loginRouter from './routes/login.routing';
-import { database } from './util/database.util';
+import stocksListRouter from './routes/stockslist.routing';
 import { quotes } from './stock';
-import { Socket } from 'socket.io';
+import { database } from './util/database.util';
+import { headersController } from './util/headers.util';
+
+
 
 const app: express.Application = express();
 app.use(urlencoded({ limit: '500mb', extended: true }));
 app.use(headersController);
 app.use('/api', json({ limit: '500mb' }));
 app.use('/api/v1/login', loginRouter);
-app.use('/api/v1/users', usersRouter);
+// app.use(tokenMiddleware);
 app.use('/api/v1/tradeHistory', tradesRouter);
-app.use('/api/v1/liveStocks', liveStocksRouter);
 app.use('/api/v1/userStocks', userStocksRouter);
+app.use('/api/v1/stocksList', stocksListRouter);
 
 const port = process.env.PORT || 4040;
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-let symbolsLiveData: string [] = [];
-setTimeout(async () => {
-  try {
-    symbolsLiveData = await quotes(['GOOGL']);
-
-
-    io.emit('stocksupdate', symbolsLiveData);
-  } catch(e) {
-
-  }
-}, 10000);
-
-io.sockets.on('connection', (socket: Socket) => {
-  socket.emit('stocksupdate', symbolsLiveData);
-});
-
-
+let symbolsLiveData: string[] = [];
 
 server.listen(port, () => {
   console.log(port);
@@ -48,6 +33,17 @@ server.listen(port, () => {
     .connect()
     .then(value => {
       console.log('connected');
+
+      setInterval(async () => {
+        try {
+          symbolsLiveData = await quotes(['GOOGL', 'AAPL']);
+          io.emit('stocksupdate', symbolsLiveData);
+        } catch (e) {}
+      }, 10000);
+
+      io.sockets.on('connection', (socket: Socket) => {
+        socket.emit('stocksupdate', symbolsLiveData);
+      });
     })
     .catch(error => {
       console.log(error);
