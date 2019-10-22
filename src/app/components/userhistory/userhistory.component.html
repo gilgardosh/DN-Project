@@ -1,61 +1,57 @@
-<div class='card'>
-    <div class='card-header'>
-      {{pageTitle}}
-    </div>
-    <div class='card-body'>
-      <div class='table-responsive'>
-        <ng-container *ngIf='userTrades && userTrades.length; else loaderRef'>
-            <table class='table'>
-            <thead>
-              <tr>
-                <th>Date and Time</th>
-                <th>Stock Name</th>
-                <th>Trade Type</th>
-                <th>Quantity</th>
-                <th>Total Price</th>
-                <!-- <th>Buy/Sell</th> -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor='let trade of userTrades'>
-                <td>{{ trade.trade_date | date:'medium' }}</td>
-                <td>
-                  <a [routerLink]="['/buysell', trade.stock_symbol]">
-                      {{ trade.stock_name }}
-                  </a>
-                </td>
-                <td>{{ trade.trade_type }}<br>
-                  <img *ngIf='(trade.trade_type=="Bought")'
-                    src='./assets/images/buy.gif'
-                    Width=30
-                    Margins=2>
-                  <img *ngIf='(trade.trade_type=="Sold")'
-                    src='./assets/images/sell.gif'
-                    Width=30
-                    Margins=2>
-                </td>
-                <td>{{ trade.quantity }}</td>
-                <td>{{ trade.total_price| currency:'USD':'symbol':'1.2-2'}}</td>
-                <!-- <td>
-                  <button
-                  [routerLink]="['/buysell', trade.stock_symbol]"
-                  class='btn btn-primary'
-                  (click)='null'>
-                  Buy/Sell
-                  </button>
-                </td> -->
-              </tr>
-            </tbody>
-          </table>
-        </ng-container>
-        <ng-template #loaderRef>
-          <mat-spinner></mat-spinner>
-        </ng-template>
-
-      </div>
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <ng-container *ngIf="userTrades && userTrades.length; else loaderRef">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date and Time</th>
+              <th>Stock Name</th>
+              <th>Trade Type</th>
+              <th>Quantity</th>
+              <th>Total Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let trade of userTrades">
+              <td>{{ trade.trade_date | date: 'medium' }}</td>
+              <td>
+                <a [routerLink]="['/buysell', trade.stock_symbol]">
+                  {{ trade.stock_name }}
+                </a>
+              </td>
+              <td>
+                {{ trade.trade_type }}<br />
+                <img
+                  *ngIf="trade.trade_type == 'Bought'"
+                  src="./assets/images/buy.gif"
+                  Width="30"
+                  Margins="2"
+                />
+                <img
+                  *ngIf="trade.trade_type == 'Sold'"
+                  src="./assets/images/sell.gif"
+                  Width="30"
+                  Margins="2"
+                />
+              </td>
+              <td>{{ trade.quantity }}</td>
+              <td>
+                {{ trade.total_price | currency: 'USD':'symbol':'1.2-2' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #loaderRef>
+        <mat-spinner></mat-spinner>
+      </ng-template>
     </div>
   </div>
-  <div *ngIf='errorMessage'
-       class='alert alert-danger'>
-    Error: {{ errorMessage }}
-  </div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">
+  Error: {{ errorMessage }}
+</div>

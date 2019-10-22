@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IAPIStocks } from 'src/app/models/apistocks.interface';
 import { LiveStocksService } from '../../services/live-stock-data.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'pm-livestocks',
@@ -16,25 +17,17 @@ export class LivestocksComponent implements OnInit, OnDestroy {
   liveStocks$: Observable<IAPIStocks[]>;
   index: IAPIStocks[];
 
-  constructor(public liveStocksService: LiveStocksService) {}
+  constructor(
+    public liveStocksService: LiveStocksService,
+    public authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.initStocksLive();
   }
 
   initStocksLive() {
-    this.liveStocks$ = this.liveStocksService.stocks$.pipe(
-      tap(stocks => {
-        // console.log(stocks);
-        // if (!!stocks) {
-        //   this.index = stocks.filter(item => {
-        //     return (item.symbol === 'GOOGL');
-        //   });
-          // console.log('livestock: '+this.index[0]);
-        // }
-      })
-    );
-    // console.log(this.index[0]);
+    this.liveStocks$ = this.liveStocksService.stocks$.pipe(tap(stocks => {}));
   }
 
   ngOnDestroy() {

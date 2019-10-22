@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  OnDestroy
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,6 +16,10 @@ import { LiveStocksService } from 'src/app/services/live-stock-data.service';
 import { BuysellComponent } from '../buysell.component';
 import { IStockTradeData } from 'src/app/models/stocktradedata.interface';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { tap, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { IAPIStocks } from 'src/app/models/apistocks.interface';
 
 export interface IForm {
   quantity: number;
@@ -23,17 +33,18 @@ export interface IForm {
   templateUrl: './buysell-form.component.html',
   styleUrls: ['./buysell-form.component.css']
 })
-export class BuysellFormComponent implements OnInit {
+export class BuysellFormComponent implements OnInit, OnDestroy {
+  private subscription = new Subscription();
   form: FormGroup;
   stockSymbol: string;
   stockData: IStockTradeData = {
-    stock_symbol: 'AAPL',
-    stock_name: 'Apple, Inc.',
-    current_price: 240.6,
-    change: 4.09,
-    change_percent: 0.02,
-    quantity_owned: 10,
-    pastInvest: 2000
+    stock_symbol: 'AAA',
+    stock_name: 'BBB',
+    current_price: 1,
+    change: 2,
+    change_percent: 3,
+    quantity_owned: 4,
+    pastInvest: 5
   };
 
   @Output() valueChanged = new EventEmitter<IForm>();
@@ -41,18 +52,52 @@ export class BuysellFormComponent implements OnInit {
   constructor(
     private buysellComponent: BuysellComponent,
     public liveStocksService: LiveStocksService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.getStockSymbol();
-    console.log(this.stockSymbol);
+    this.initStockTradeData();
     this.initForm();
   }
 
   getStockSymbol() {
-    this.stockSymbol = this.buysellComponent.stockSymbol;
+    const param$ = this.route.paramMap.subscribe(param => {
+      this.stockSymbol = param.get('stockSymbol');
+      console.log('stock: ' + this.stockSymbol);
+    });
+    this.subscription.add(param$);
   }
+
+  initStockTradeData() {
+    // let index: IAPIStocks[];
+    const param2$ = this.liveStocksService.stocks$.pipe(
+      tap(stocks => {
+        console.log('!!!');
+        // index = stocks.filter(item => {
+        //   return (item.symbol === this.stockSymbol);
+        // });
+        // console.log("!!!!:" + index[0]);
+      })
+    );
+    // this.subscription.add(param2$);
+  }
+
+  // initStockLive() {
+  //   const param$ = this.buysellComponent.stockTradeData$.pipe(tap(data => {
+  //     console.log("!!!");
+  //     if (!!data) {
+  //       this.stockData$.stock_symbol = data[0].symbol;
+  //       this.stockData$.stock_name = data[0].companyName;
+  //       this.stockData$.current_price = data[0].latestPrice;
+  //       this.stockData$.change = data[0].change;
+  //       this.stockData$.change_percent = data[0].changePercent;
+  //     }
+  //   }
+  //   ));
+  //   console.log(this.index[0]);
+  // }
 
   // from now on - Form stuff
 
@@ -88,7 +133,7 @@ export class BuysellFormComponent implements OnInit {
         : true) // sell quantity validation
       ? null
       : { Error };
-  };
+  }
 
   get isFormValid() {
     return this.form.valid;
@@ -100,13 +145,16 @@ export class BuysellFormComponent implements OnInit {
       this.form.value.formTotalPrice * this.form.value.quantity;
     this.form.value.formStockSymbol = this.stockSymbol;
     console.log(this.form.value);
-    const TEMP = this.transactionService.makeTransaction(
+    this.transactionService.makeTransaction(
       this.form.value.formStockSymbol,
       this.form.value.buysellselector,
       this.form.value.quantity,
       this.form.value.formTotalPrice
     );
-    console.log(TEMP)
-    this.valueChanged.emit(this.form.value);
+    // this.valueChanged.emit(this.form.value);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -8,8 +8,6 @@ import { Observable } from 'rxjs';
 
 // this.appService.getUserId
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -20,9 +18,10 @@ export class StockTradeDataService {
   liveSpecStock: any;
   errorMessage = '';
 
-  constructor(private liveStocksService: LiveStocksService,
-              private userStocksService: UserStocksService
-    ) { }
+  constructor(
+    private liveStocksService: LiveStocksService,
+    private userStocksService: UserStocksService
+  ) {}
 
   // getStockTradeData(stock_symbol: string):
   // Observable<IStockTradeData>
@@ -51,6 +50,23 @@ export class StockTradeDataService {
   //       quantity_owned: 45,
   //       pastInvest: 2000,
   //     };
+
+  // public stockLiveData(stockSymbol) {
+  //   let index: IAPIStocks[];
+  //   const AAAA$ = this.stocks$.pipe(
+  //     tap(stocks => {
+  //       // console.log(stocks);
+  //       if (!!stocks && !!stockSymbol) {
+  //         index = stocks.filter(item => {
+  //           return (item.symbol === stockSymbol);
+  //         });
+  //         console.log(index[0]);
+  //       }
+  //     })
+  //   );
+  //   console.log(index[0]);
+  //   return (index[0]);
+  // }
 
   // console.log('stock data: ' + JSON.stringify(this.stockTradeData));
   // return this.stockTradeData;

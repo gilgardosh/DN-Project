@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
-
 @Component({
   selector: 'pm-signup',
   templateUrl: './signup.component.html',
@@ -14,28 +13,17 @@ export class SignupComponent implements OnInit {
     email: '',
     password: ''
   };
-  // getState: Observable<any>;
   errorMessage: string | null;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router // private store: Store<AppState>
-  ) {
-    // this.getState = this.store.select(selectAuthState);
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    // this.getState.subscribe((state) => {
-    //   this.errorMessage = state.errorMessage;
-    // });
-  }
+  ngOnInit() {}
 
   onSubmit(): void {
     const payload = {
       email: this.user.email,
       password: this.user.password
     };
-    // this.store.dispatch(new SignUp(payload));
     this.authService.signUp(payload.email, payload.password).subscribe(
       user => {
         this.router.navigate(['/']);

@@ -13,7 +13,7 @@ export class UserhistoryComponent implements OnInit {
 
   userTrades: IUserTradeData[] = [];
 
-  constructor(private userTradesService: UserTradesService) { }
+  constructor(private userTradesService: UserTradesService) {}
 
   ngOnInit(): void {
     this.initTrades();
@@ -25,7 +25,7 @@ export class UserhistoryComponent implements OnInit {
         this.userTrades = userTrades;
         console.log('User Trades: ' + JSON.stringify(this.userTrades));
       },
-      error: err => this.errorMessage = err
+      error: err => (this.errorMessage = err)
     });
   }
 }

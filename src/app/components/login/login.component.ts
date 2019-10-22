@@ -15,26 +15,15 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
-  constructor(
-    // private store: Store<AppState>,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    // this.getState = this.store.select(selectAuthState);
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    // this.getState.subscribe((state) => {
-    //   this.errorMessage = state.errorMessage;
-    // });
-  }
+  ngOnInit() {}
 
   onSubmit(): void {
     const payload = {
       email: this.user.email,
       password: this.user.password
     };
-    // this.store.dispatch(new LogIn(payload));
     this.authService.logIn(payload.email, payload.password).subscribe(
       user => {
         this.errorMessage = null;
@@ -46,14 +35,3 @@ export class LoginComponent implements OnInit {
     );
   }
 }
-
-// constructor(private fb: FormBuilder) {}
-
-// onSubmit() void {
-//     const payload = {
-//       email: this.user.email,
-//       password: this.user.password
-//     };
-//     this.store.dispatch(new LogIn(payload));
-//   }
-// }

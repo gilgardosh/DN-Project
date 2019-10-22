@@ -22,21 +22,13 @@
         </td>
         <td
           [ngClass]="{
-            stockLoss:
-              0 >
-              stockData.current_price -
-              stockData.open_price,
-            stockGain:
-              stockData.current_price -
-              stockData.open_price
-              > 0
+            stockLoss: 0 > stockData.current_price - stockData.open_price,
+            stockGain: stockData.current_price - stockData.open_price > 0
           }"
         >
           {{ stockData.change }}
           <br />
-          {{
-            stockData.change_percent | percent
-          }}
+          {{ stockData.change_percent | percent }}
         </td>
       </tr>
     </tbody>
@@ -78,7 +70,7 @@
 </div>
 
 <form class="buysell-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-radio-group
+  <mat-radio-group
     aria-label="Select an option"
     formControlName="buysellselector"
     *ngIf="stockData.quantity_owned > 0"

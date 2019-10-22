@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { IForm } from './buysell-form/buysell-form.component';
+import { Observable, Subscription } from 'rxjs';
+import { IAPIStocks } from 'src/app/models/apistocks.interface';
 import { StocksListService } from 'src/app/services/stockslist.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { filter } from 'rxjs/operators';
+import { IForm } from './buysell-form/buysell-form.component';
 
 @Component({
   selector: 'pm-buysell',
@@ -17,11 +16,12 @@ export class BuysellComponent implements OnInit, OnDestroy {
   public stockSymbol: string;
   errorMessage = '';
   listHasLoaded = false;
+  public stockTradeData$: Observable<IAPIStocks[]>;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthService,
+    // private authService: AuthService,
     private stocksListService: StocksListService
   ) {}
 
@@ -44,6 +44,13 @@ export class BuysellComponent implements OnInit, OnDestroy {
     console.log('value is here: ', values);
   }
 
+  initParam$() {
+    const param$ = this.route.paramMap.subscribe(param => {
+      this.stockSymbol = param.get('stockSymbol');
+    });
+    this.subscription.add(param$);
+  }
+
   initStocksList$() {
     this.listHasLoaded = false;
     const param2$ = this.stocksListService.getStocksList().subscribe(list => {
@@ -57,13 +64,6 @@ export class BuysellComponent implements OnInit, OnDestroy {
       }
     });
     this.subscription.add(param2$);
-  }
-
-  initParam$() {
-    const param$ = this.route.paramMap.subscribe(param => {
-      this.stockSymbol = param.get('stockSymbol');
-    });
-    this.subscription.add(param$);
   }
 
   ngOnDestroy() {

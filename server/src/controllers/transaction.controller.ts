@@ -4,7 +4,7 @@ import { database } from './../util/database.util';
 
 export const transactionController: RequestHandler = (req, res, next) => {
 
-  console.log("HELLO WORLD");
+  console.log("transaction made");
   const { stockSymbol, buyOrSell, quantity, totalPrice, userId } = req.body;
 
   if (userId && totalPrice && quantity && buyOrSell && stockSymbol) {

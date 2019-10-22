@@ -1,41 +1,42 @@
-<div class='card'>
-  <div class='card-header'>
-    {{pageTitle}}
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
   </div>
-  <div class='card-body'>
-    <div class='table-responsive'>
-      <ng-container *ngIf='userStocks && userStocks.length; else loaderRef'>
-          <table class='table' >
-              <thead>
-                <tr>
-                  <th>Stock Name</th>
-                  <th>Quantity</th>
-                  <th>Past Invest</th>
-                  <th>Current Value</th>
-                  <th>Trade</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor='let stock of userStocks'>
-                  <td>
-                    <a [routerLink]="['/buysell', stock.stock_symbol]">
-                      {{ stock.stock_name }}
-                    </a>
-                  </td>
-                  <td>{{ stock.quantity_owned }}</td>
-                  <td>{{ stock.investment | currency:'USD':'symbol':'1.2-2'}}</td>
-                  <td>not yet</td>
-                  <td>
-                    <button
-                    [routerLink]="['/buysell', stock.stock_symbol]"
-                    class='btn btn-primary'
-                    (click)='null'>
-                    Buy/Sell
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+  <div class="card-body">
+    <div class="table-responsive">
+      <ng-container *ngIf="userStocks && userStocks.length; else loaderRef">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Stock Name</th>
+              <th>Quantity</th>
+              <th>Past Invest</th>
+              <th>Current Value</th>
+              <th>Trade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let stock of userStocks">
+              <td>
+                <a [routerLink]="['/buysell', stock.stock_symbol]">
+                  {{ stock.stock_name }}
+                </a>
+              </td>
+              <td>{{ stock.quantity_owned }}</td>
+              <td>{{ stock.investment | currency: 'USD':'symbol':'1.2-2' }}</td>
+              <td>not yet</td>
+              <td>
+                <button
+                  [routerLink]="['/buysell', stock.stock_symbol]"
+                  class="btn btn-primary"
+                  (click)="(null)"
+                >
+                  Buy/Sell
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </ng-container>
       <ng-template #loaderRef>
         <mat-spinner></mat-spinner>
@@ -43,7 +44,6 @@
     </div>
   </div>
 </div>
-<div *ngIf='errorMessage'
-     class='alert alert-danger'>
+<div *ngIf="errorMessage" class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>

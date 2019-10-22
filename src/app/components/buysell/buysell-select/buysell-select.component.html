@@ -1,10 +1,23 @@
 <mat-card>
   <mat-form-field>
-      <input type="text" placeholder="Enter Stock Name" aria-label="Number" matInput [formControl]="stockSymbolEnter" [matAutocomplete]="auto">
-      <mat-autocomplete (optionSelected)="onOptionSelected($event)" #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
+    <input
+      type="text"
+      placeholder="Enter Stock Name"
+      aria-label="Number"
+      matInput
+      [formControl]="stockSymbolEnter"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      (optionSelected)="onOptionSelected($event)"
+      #auto="matAutocomplete"
+    >
+      <mat-option
+        *ngFor="let option of filteredOptions | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 </mat-card>

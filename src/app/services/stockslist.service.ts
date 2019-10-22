@@ -9,15 +9,7 @@ import { tap, map } from 'rxjs/operators';
 export class StocksListService {
   stockList: string[] = [];
 
-  constructor(private http: HttpService) {
-    // this.initStocksList();
-  }
-
-  // initStocksList() {
-  //   this.stockList = this.http
-  //     .onGetStockslist()
-  //     .pipe(map(list => list.map(a => a['stock_symbol'])));
-  // }
+  constructor(private http: HttpService) {}
 
   getStocksList(): Observable<string[]> {
     return this.http.onGetStockslist().pipe(

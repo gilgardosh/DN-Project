@@ -4,17 +4,14 @@ import { IUserStocks } from '../models/userstocks.interface';
 import { HttpService } from './http.service';
 import { UserDataService } from './user-data.service';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class UserStocksService {
-
   constructor(
     private http: HttpService,
     private userDataService: UserDataService
-  ) { }
+  ) {}
 
   getStocks(): Observable<IUserStocks[]> {
     let userId = this.userDataService.getUserId();

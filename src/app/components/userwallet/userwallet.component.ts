@@ -8,25 +8,25 @@ import { Subscription } from 'rxjs';
   templateUrl: './userwallet.component.html',
   styleUrls: ['./userwallet.component.css']
 })
-export class UserwalletComponent implements OnInit,OnDestroy {
+export class UserwalletComponent implements OnInit, OnDestroy {
   public pageTitle = 'Personal E-Wallet';
   errorMessage = '';
   subscription = new Subscription();
   userStocks: IUserStocks[] = [];
 
-  constructor(private userStocksService: UserStocksService) { }
+  constructor(private userStocksService: UserStocksService) {}
 
   ngOnInit(): void {
     this.initStocks();
   }
 
   initStocks() {
-    const stock$ =  this.userStocksService.getStocks().subscribe({
+    const stock$ = this.userStocksService.getStocks().subscribe({
       next: userStocks => {
         this.userStocks = userStocks;
         console.log('User Stocks: ' + JSON.stringify(this.userStocks));
       },
-      error: err => this.errorMessage = err
+      error: err => (this.errorMessage = err)
     });
     this.subscription.add(stock$);
   }
