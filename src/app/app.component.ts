@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
-import { StockTradeDataService } from './services/stock-trade-data.service';
 
 @Component({
   selector: 'pm-root',

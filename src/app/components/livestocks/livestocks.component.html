@@ -28,7 +28,15 @@
                 </P>
               </td>
               <td>
-                {{ stock.latestPrice | currency: 'USD':'symbol':'1.2-2' }}
+                <h5>
+                  {{ stock.latestPrice | currency: 'USD':'symbol':'1.2-2' }}
+                </h5>
+                <p *ngIf="!stock.isUSMarketOpen">
+                  Markets closed
+                </p>
+                <p *ngIf="stock.isUSMarketOpen">
+                  Open: {{ stock.open | currency: 'USD':'symbol':'1.2-2' }}
+                </p>
               </td>
               <td
                 [ngClass]="{
@@ -38,7 +46,7 @@
               >
                 {{ stock.change }}
                 <br />
-                {{ stock.changePercent | percent }}
+                ({{ stock.changePercent | percent }})
               </td>
               <td>
                 <img

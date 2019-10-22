@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { IAPIStocks } from 'src/app/models/apistocks.interface';
 import { StocksListService } from 'src/app/services/stockslist.service';
-import { IForm } from './buysell-form/buysell-form.component';
+// import { IForm } from './buysell-form/buysell-form.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'pm-buysell',
@@ -40,9 +41,9 @@ export class BuysellComponent implements OnInit, OnDestroy {
   //   this.subscription.add(auth$);
   // }
 
-  onValueChanged(values: IForm) {
-    console.log('value is here: ', values);
-  }
+  // onValueChanged(values: IForm) {
+  //   console.log('value is here: ', values);
+  // }
 
   initParam$() {
     const param$ = this.route.paramMap.subscribe(param => {

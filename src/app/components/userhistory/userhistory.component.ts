@@ -23,7 +23,6 @@ export class UserhistoryComponent implements OnInit {
     this.userTradesService.getTrades().subscribe({
       next: userTrades => {
         this.userTrades = userTrades;
-        console.log('User Trades: ' + JSON.stringify(this.userTrades));
       },
       error: err => (this.errorMessage = err)
     });

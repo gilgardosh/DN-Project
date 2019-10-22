@@ -41,7 +41,6 @@ export class BuysellSelectComponent implements OnInit, OnDestroy {
     this.stocksListService.getStocksList().subscribe({
       next: list => {
         this.stockList = list.map(a => a['stock_symbol']);
-        console.log(this.stockList);
       },
       error: err => this.errorMessage = err
     });

@@ -14,12 +14,12 @@ export class UserStocksService {
   ) {}
 
   getStocks(): Observable<IUserStocks[]> {
-    let userId = this.userDataService.getUserId();
+    const userId = this.userDataService.getUserId();
     return this.http.onGetUserStocks(userId, 'ALL');
   }
 
   getSpecStock(stock_symbol: string): Observable<IUserStocks[]> {
-    let userId = this.userDataService.getUserId();
+    const userId = this.userDataService.getUserId();
     return this.http.onGetUserStocks(userId, stock_symbol);
   }
 }

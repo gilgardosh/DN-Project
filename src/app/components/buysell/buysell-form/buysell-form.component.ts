@@ -16,11 +16,9 @@ import { LiveStocksService } from 'src/app/services/live-stock-data.service';
 import { BuysellComponent } from '../buysell.component';
 import { IStockTradeData } from 'src/app/models/stocktradedata.interface';
 import { TransactionService } from 'src/app/services/transaction.service';
-import { tap, map } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { IAPIStocks } from 'src/app/models/apistocks.interface';
-import { StockTradeDataService } from 'src/app/services/stock-trade-data.service';
 import { IUserStocks } from 'src/app/models/userstocks.interface';
 import { UserStocksService } from 'src/app/services/user-stocks.service';
 
@@ -73,7 +71,6 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
       this.stockReset();
       this.initUserOwned(this.stockSymbol);
       this.testfunc(this.stockSymbol);
-      console.log('stock: ' + this.stockSymbol);
     });
     this.subscription.add(param$);
   }
@@ -167,7 +164,7 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
     this.form.value.formTotalPrice =
       this.form.value.formTotalPrice * this.form.value.quantity;
     this.form.value.formStockSymbol = this.stockSymbol;
-    console.log(this.form.value);
+    console.log('transaction form value: ' + this.form.value);
     this.transactionService.makeTransaction(
       this.form.value.formStockSymbol,
       this.form.value.buysellselector,
