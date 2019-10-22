@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class LiveStocksService extends Socket {
-  stocks$ = new BehaviorSubject<IAPIStocks[]>(null);
+  public stocks$ = new BehaviorSubject<IAPIStocks[]>(null);
 
   constructor() {
     super({

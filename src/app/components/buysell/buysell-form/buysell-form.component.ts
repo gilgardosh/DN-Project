@@ -17,9 +17,12 @@ import { BuysellComponent } from '../buysell.component';
 import { IStockTradeData } from 'src/app/models/stocktradedata.interface';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { tap, map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { IAPIStocks } from 'src/app/models/apistocks.interface';
+import { StockTradeDataService } from 'src/app/services/stock-trade-data.service';
+import { IUserStocks } from 'src/app/models/userstocks.interface';
+import { UserStocksService } from 'src/app/services/user-stocks.service';
 
 export interface IForm {
   quantity: number;
@@ -37,67 +40,87 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   form: FormGroup;
   stockSymbol: string;
+  userStocks: IUserStocks[] = [];
+  liveStocks: IAPIStocks[] = [];
+  errorMessage = '';
   stockData: IStockTradeData = {
-    stock_symbol: 'AAA',
-    stock_name: 'BBB',
-    current_price: 1,
-    change: 2,
-    change_percent: 3,
-    quantity_owned: 4,
-    pastInvest: 5
+    stock_symbol: '',
+    stock_name: '',
+    current_price: null,
+    change: null,
+    change_percent: null,
+    quantity_owned: 0,
+    pastInvest: null
   };
 
   @Output() valueChanged = new EventEmitter<IForm>();
 
   constructor(
-    private buysellComponent: BuysellComponent,
-    public liveStocksService: LiveStocksService,
+    private liveStocksService: LiveStocksService,
+    private userStocksService: UserStocksService,
     private transactionService: TransactionService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.getStockSymbol();
-    this.initStockTradeData();
+    this.getStockData();
     this.initForm();
   }
 
-  getStockSymbol() {
+  getStockData() {
     const param$ = this.route.paramMap.subscribe(param => {
       this.stockSymbol = param.get('stockSymbol');
+      this.stockReset();
+      this.initUserOwned(this.stockSymbol);
+      this.testfunc(this.stockSymbol);
       console.log('stock: ' + this.stockSymbol);
     });
     this.subscription.add(param$);
   }
 
-  initStockTradeData() {
-    // let index: IAPIStocks[];
-    const param2$ = this.liveStocksService.stocks$.pipe(
-      tap(stocks => {
-        console.log('!!!');
-        // index = stocks.filter(item => {
-        //   return (item.symbol === this.stockSymbol);
-        // });
-        // console.log("!!!!:" + index[0]);
-      })
-    );
-    // this.subscription.add(param2$);
+  stockReset() {
+    this.stockData = {
+      stock_symbol: '',
+      stock_name: '',
+      current_price: null,
+      change: null,
+      change_percent: null,
+      quantity_owned: 0,
+      pastInvest: null
+    };
   }
 
-  // initStockLive() {
-  //   const param$ = this.buysellComponent.stockTradeData$.pipe(tap(data => {
-  //     console.log("!!!");
-  //     if (!!data) {
-  //       this.stockData$.stock_symbol = data[0].symbol;
-  //       this.stockData$.stock_name = data[0].companyName;
-  //       this.stockData$.current_price = data[0].latestPrice;
-  //       this.stockData$.change = data[0].change;
-  //       this.stockData$.change_percent = data[0].changePercent;
-  //     }
-  //   }
-  //   ));
-  //   console.log(this.index[0]);
-  // }
+  initUserOwned(stockSymbol) {
+    const param2$ = this.userStocksService.getStocks().subscribe({
+      next: userStocks => {
+        this.userStocks = userStocks.filter(stock => {
+          return stock.stock_symbol === stockSymbol;
+        });
+        if (this.userStocks.length === 1) {
+          this.stockData.quantity_owned = this.userStocks[0].quantity_owned;
+          this.stockData.pastInvest = this.userStocks[0].investment;
+        }
+      },
+      error: err => (this.errorMessage = err)
+    });
+    this.subscription.add(param2$);
+  }
+
+  testfunc(stockSymbol) {
+    const param3$ = this.liveStocksService.stocks$.subscribe({
+      next: stocks => {
+        this.liveStocks = stocks.filter(stock => {
+          return stock.symbol === stockSymbol;
+        });
+        if (this.liveStocks.length === 1) {
+          this.stockData.stock_name = this.liveStocks[0].companyName;
+          this.stockData.current_price = this.liveStocks[0].latestPrice;
+          this.stockData.change = this.liveStocks[0].change;
+          this.stockData.change_percent = this.liveStocks[0].changePercent;
+        }
+      }
+    });
+  }
 
   // from now on - Form stuff
 
@@ -133,7 +156,7 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
         : true) // sell quantity validation
       ? null
       : { Error };
-  }
+  };
 
   get isFormValid() {
     return this.form.valid;

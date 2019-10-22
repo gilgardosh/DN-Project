@@ -8,6 +8,7 @@ import { UserDataService } from './user-data.service';
   providedIn: 'root'
 })
 export class UserTradesService {
+
   constructor(
     private http: HttpService,
     private userDataService: UserDataService

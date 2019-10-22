@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { StockTradeDataService } from './services/stock-trade-data.service';
 
 @Component({
   selector: 'pm-root',
@@ -11,7 +12,7 @@ export class AppComponent implements OnInit {
   errorMessage = null;
 
   constructor(
-    public authService: AuthService
+    public authService: AuthService,
   ) {}
 
   ngOnInit() {}

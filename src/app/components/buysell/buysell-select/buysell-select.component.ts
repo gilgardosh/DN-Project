@@ -28,12 +28,12 @@ export class BuysellSelectComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.initStocksList$();
+    this.initStocksList();
     this.getStocksList();
     this.initForm();
   }
 
-  initStocksList$() {
+  initStocksList() {
     this.stockList = this.stocksListService.stockList;
   }
 
