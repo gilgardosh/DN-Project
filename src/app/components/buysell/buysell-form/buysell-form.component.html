@@ -37,17 +37,14 @@
     <thead>
       <tr>
         <th>Owned</th>
+        <th>Owned Val.</th>
         <th>Past Invest</th>
-        <th>Current Val.</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>
           {{ stockData.quantity_owned }}
-        </td>
-        <td>
-          {{ stockData.pastInvest | currency: 'USD':'symbol':'1.2-2' }}
         </td>
         <td
           [ngClass]="{
@@ -63,6 +60,9 @@
             stockData.quantity_owned * stockData.current_price
               | currency: 'USD':'symbol':'1.2-2'
           }}
+        </td>
+        <td>
+          {{ stockData.pastInvest | currency: 'USD':'symbol':'1.2-2' }}
         </td>
       </tr>
     </tbody>

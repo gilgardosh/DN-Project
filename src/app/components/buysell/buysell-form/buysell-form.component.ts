@@ -17,7 +17,7 @@ import { BuysellComponent } from '../buysell.component';
 import { IStockTradeData } from 'src/app/models/stocktradedata.interface';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { Subscription, Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IAPIStocks } from 'src/app/models/apistocks.interface';
 import { IUserStocks } from 'src/app/models/userstocks.interface';
 import { UserStocksService } from 'src/app/services/user-stocks.service';
@@ -57,7 +57,8 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
     private liveStocksService: LiveStocksService,
     private userStocksService: UserStocksService,
     private transactionService: TransactionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -70,7 +71,7 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
       this.stockSymbol = param.get('stockSymbol');
       this.stockReset();
       this.initUserOwned(this.stockSymbol);
-      this.testfunc(this.stockSymbol);
+      this.getLiveStockData(this.stockSymbol);
     });
     this.subscription.add(param$);
   }
@@ -103,7 +104,7 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
     this.subscription.add(param2$);
   }
 
-  testfunc(stockSymbol) {
+  getLiveStockData(stockSymbol) {
     const param3$ = this.liveStocksService.stocks$.subscribe({
       next: stocks => {
         this.liveStocks = stocks.filter(stock => {
@@ -144,6 +145,7 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
     const buysellselector = control.get('buysellselector');
     const regex = /^[0-9]+$/;
     const value = quantity.value.trim();
+    let lastTransaction;
     return value.match(regex) && // is quantity a number validation
       quantity &&
       buysellselector &&
@@ -161,20 +163,35 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     let { quantity } = this.form.value;
+    let { formTotalPrice } = this.form.value;
+    let { formStockSymbol } = this.form.value;
+
     quantity = Number(quantity);
-    this.form.value.formTotalPrice =
-      this.form.value.formTotalPrice * quantity;
-    this.form.value.formStockSymbol = this.stockSymbol;
-    console.log('transaction form value: ' + this.form.value);
-    this.transactionService.makeTransaction(
-      this.form.value.formStockSymbol,
-      this.form.value.buysellselector,
-      quantity,
-      this.form.value.formTotalPrice
-    ).subscribe({
-      next: userStocks => { },
-      error: err => (this.errorMessage = err)
-    });
+    formTotalPrice = formTotalPrice * quantity;
+    formStockSymbol = this.stockSymbol;
+    this.transactionService
+      .makeTransaction1(
+        formStockSymbol,
+        this.form.value.buysellselector,
+        quantity,
+        formTotalPrice
+      )
+      .subscribe({
+        next: userStocks => {},
+        error: err => (this.errorMessage = err)
+      });
+    this.transactionService
+      .makeTransaction2(
+        formStockSymbol,
+        this.form.value.buysellselector,
+        quantity,
+        formTotalPrice
+      )
+      .subscribe({
+        next: userStocks => {},
+        error: err => (this.errorMessage = err)
+      });
+    this.router.navigate(['/buysell']);
     // this.valueChanged.emit(this.form.value);
   }
 

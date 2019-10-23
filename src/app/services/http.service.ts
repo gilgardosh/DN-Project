@@ -25,8 +25,9 @@ export class HttpService {
   }
 
   onSignUp(body) {
-    const url = `/signUp`;
-    return this.http.post<IHttpRequestHelper<IUserData>>(url, body);
+    const url = `/signup`;
+    console.log('signup: '+ JSON.stringify(body));
+    return this.http.put<IHttpRequestHelper<any>>(url, body);
   }
 
   onGetUserStocks(userId: number) {
@@ -38,7 +39,7 @@ export class HttpService {
       .pipe(catchError(this.handleError));
   }
 
-  onMakeTransaction(
+  onMakeTransaction1(
     stockSymbol: string,
     buyOrSell: string,
     quantity: number,
@@ -53,7 +54,26 @@ export class HttpService {
       userId
     };
     return this.http
-      .put<any>(`/transaction`, body)
+      .put<any>(`/transaction1`, body)
+      .pipe(catchError(this.handleError));
+  }
+
+  onMakeTransaction2(
+    stockSymbol: string,
+    buyOrSell: string,
+    quantity: number,
+    totalPrice: number,
+    userId: number
+  ) {
+    const body = {
+      stockSymbol,
+      buyOrSell,
+      quantity,
+      totalPrice,
+      userId
+    };
+    return this.http
+      .put<any>(`/transaction2`, body)
       .pipe(catchError(this.handleError));
   }
 
@@ -65,6 +85,7 @@ export class HttpService {
       .post<IUserTradeData[]>(`/tradeHistory`, body)
       .pipe(catchError(this.handleError));
   }
+
 
   onGetStockslist() {
     return this.http.get<IHttpRequestHelper<string[]>>(`/stocksList`).pipe(

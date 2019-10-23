@@ -58,8 +58,8 @@ export class AuthService {
     );
   }
 
-  signUp(email: string, password: string): Observable<IUserData> {
-    return this.http.onSignUp({ email, password }).pipe(
+  signUp(email: string, password: string, first_name: string, last_name: string): Observable<IUserData> {
+    return this.http.onSignUp({ email, password, first_name, last_name }).pipe(
       map(res => res.body),
       tap(user => {
         this.userDataService.setUser(user);

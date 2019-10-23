@@ -1,38 +1,40 @@
 import { RequestHandler } from 'express';
 import { responseHelper } from '../util/response.util';
-import { database } from './../util/database.util';
+import { database } from '../util/database.util';
 
-export const transactionController: RequestHandler = (req, res, next) => {
+export const transactionUserStocksController: RequestHandler = (req, res, next) => {
 
 
   const { stockSymbol, buyOrSell, quantity, totalPrice, userId } = req.body;
-
+  console.log(req.body);
   if (userId && totalPrice && quantity && buyOrSell && stockSymbol) {
 
     if (buyOrSell === 'sell') {
       const query = {
-        name: 'make-sell-transaction',
-        text: ' INSERT INTO public.user_trades ( user_id, stock_id, quantity, total_price, trade_type) VALUES ($1,(SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2), $3, $4, $5);',
-        values: [userId, stockSymbol, -quantity, -totalPrice, 'Sold'],
+        name: 'make-sell-transaction-on-user-stocks',
+        text: ' UPDATE public.user_stocks SET quantity_owned=(quantity_owned - $3), investment=(investment - $4) WHERE user_id=$1 AND stock_id=(SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2);',
+        values: [userId, stockSymbol, quantity, totalPrice],
       };
-
+      console.log(query);
       database.query(query)
       .then(data => {
         res.status(200).json(responseHelper(data).body.rows);
+        console.log('sell transaction made');
       })
       .catch(err => {
         res.status(401).json(responseHelper(err, false));
       });
     } else if (buyOrSell === 'buy') {
       const query = {
-        name: 'make-buy-transaction',
-        text: ' INSERT INTO public.user_trades( user_id, stock_id, quantity, total_price, trade_type ) VALUES ($1,(SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2), $3, $4, $5);',
-        values: [userId, stockSymbol, quantity, totalPrice, 'Bought'],
+        name: 'make-buy-transaction-on-user-stocks',
+        text: ' UPDATE public.user_stocks SET quantity_owned=(quantity_owned + $3), investment=(investment + $4) WHERE user_id=$1 AND stock_id=(SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2);',
+        values: [userId, stockSymbol, quantity, totalPrice],
       };
       console.log(query);
       database.query(query)
       .then(data => {
         res.status(200).json(responseHelper(data).body.rows);
+        console.log('sell transaction made');
       })
       .catch(err => {
         res.status(401).json(responseHelper(err, false));

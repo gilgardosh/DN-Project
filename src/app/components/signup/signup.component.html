@@ -1,24 +1,92 @@
-<div class="row">
+<form novalidate (ngSubmit)="onSubmit()" ngNativeValidate>
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Signup</mat-card-title>
+      <br />
+      <div *ngIf="errorMessage">
+        <div class="alert alert-danger" role="alert">
+          {{ errorMessage }}
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="signupFormGroup">
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [(ngModel)]="user.email"
+            placeholder="Email"
+            name="email"
+            type="email"
+            id="email"
+            required
+          />
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [(ngModel)]="user.password"
+            placeholder="Password"
+            name="password"
+            type="password"
+            id="password"
+            required
+          />
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [(ngModel)]="user.first_name"
+            placeholder="First Name"
+            name="first_name"
+            required
+          />
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [(ngModel)]="user.last_name"
+            placeholder="Last Name"
+            name="last_name"
+            required
+          />
+        </mat-form-field>
+        <br />
+        <button mat-button [disabled]="!isFormValid" (click)="onSubmit()">Confirm</button>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button
+      >&nbsp;&nbsp;
+      <a [routerLink]="['/']">
+        <button mat-raised-button color="warn" type="cancel">Cancel</button>
+      </a>
+    </mat-card-actions>
+
+    <p>
+      <span>Already have an account?&nbsp;</span>
+      <a [routerLink]="['/login']">Log in!</a>
+    </p>
+  </mat-card>
+</form>
+
+<!-- <div class="row">
   <div class="col-md-4">
     <h1>Sign up</h1>
     <hr />
-    <br />
-    <div *ngIf="errorMessage">
-      <div class="alert alert-danger" role="alert">
-        {{ errorMessage }}
-      </div>
-    </div>
+
+
     <form (ngSubmit)="onSubmit()" ngNativeValidate>
       <div class="form-group">
         <label for="email">Email</label>
         <input
           [(ngModel)]="user.email"
-          name="email"
-          type="email"
-          required
+
           class="form-control"
-          id="email"
-          placeholder="enter your email"
+
         />
       </div>
       <div class="form-group">
@@ -41,4 +109,4 @@
       <a [routerLink]="['/login']">Log in!</a>
     </p>
   </div>
-</div>
+</div> -->

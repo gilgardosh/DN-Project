@@ -1,24 +1,18 @@
-<div class="card">
-  <div class="card-header">
-    {{ pageTitle }}
-  </div>
-  <div class="card-body">
-    <div class="container-fluid">
-      <div class="text-center">
+<mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>{{ pageTitle }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
         <ng-container *ngIf="stockSymbol; else autoRef">
-          <pm-buysell-form
-            (valueChanged)="onValueChanged($event)"
-          ></pm-buysell-form>
-        </ng-container>
-        <ng-template #autoRef>
-          <ng-container *ngIf="listHasLoaded; else listLoaderRef">
-            <pm-buysell-select [stockSymbol]="stockSymbol"></pm-buysell-select>
+            <pm-buysell-form></pm-buysell-form>
           </ng-container>
-          <ng-template #listLoaderRef>
-            <mat-spinner></mat-spinner>
+          <ng-template #autoRef>
+            <ng-container *ngIf="listHasLoaded; else listLoaderRef">
+              <pm-buysell-select [stockSymbol]="stockSymbol"></pm-buysell-select>
+            </ng-container>
+            <ng-template #listLoaderRef>
+              <mat-spinner></mat-spinner>
+            </ng-template>
           </ng-template>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-</div>
+    </mat-card-content>
+  </mat-card>

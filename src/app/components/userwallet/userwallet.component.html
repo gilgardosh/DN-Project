@@ -1,8 +1,8 @@
-<div class="card">
-  <div class="card-header">
-    {{ pageTitle }}
-  </div>
-  <div class="card-body">
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>{{ pageTitle }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
     <div class="table-responsive">
       <ng-container *ngIf="userStocks && userStocks.length; else loaderRef">
         <table class="table">
@@ -11,29 +11,31 @@
               <th>Stock Name</th>
               <th>Quantity</th>
               <th>Past Invest</th>
-              <th>Current Value</th>
               <th>Trade</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let stock of userStocks">
-              <td>
-                <a [routerLink]="['/buysell', stock.stock_symbol]">
-                  {{ stock.stock_name }}
-                </a>
-              </td>
-              <td>{{ stock.quantity_owned }}</td>
-              <td>{{ stock.investment | currency: 'USD':'symbol':'1.2-2' }}</td>
-              <td>not yet</td>
-              <td>
-                <button
-                  [routerLink]="['/buysell', stock.stock_symbol]"
-                  class="btn btn-primary"
-                  (click)="(null)"
-                >
-                  Buy/Sell
-                </button>
-              </td>
+              <ng-container *ngIf="stock.quantity_owned > 0">
+                <td>
+                  <a [routerLink]="['/buysell', stock.stock_symbol]">
+                    {{ stock.stock_name }}
+                  </a>
+                </td>
+                <td>{{ stock.quantity_owned }}</td>
+                <td>
+                  {{ stock.investment | currency: 'USD':'symbol':'1.2-2' }}
+                </td>
+                <td>
+                  <button
+                    [routerLink]="['/buysell', stock.stock_symbol]"
+                    class="btn btn-primary"
+                    (click)="(null)"
+                  >
+                    Buy/Sell
+                  </button>
+                </td>
+              </ng-container>
             </tr>
           </tbody>
         </table>
@@ -42,8 +44,10 @@
         <mat-spinner></mat-spinner>
       </ng-template>
     </div>
-  </div>
-</div>
-<div *ngIf="errorMessage" class="alert alert-danger">
-  Error: {{ errorMessage }}
-</div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      Error: {{ errorMessage }}
+    </div>
+  </mat-card-actions>
+</mat-card>
