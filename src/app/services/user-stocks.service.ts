@@ -15,11 +15,6 @@ export class UserStocksService {
 
   getStocks(): Observable<IUserStocks[]> {
     const userId = this.userDataService.getUserId();
-    return this.http.onGetUserStocks(userId, 'ALL');
-  }
-
-  getSpecStock(stock_symbol: string): Observable<IUserStocks[]> {
-    const userId = this.userDataService.getUserId();
-    return this.http.onGetUserStocks(userId, stock_symbol);
+    return this.http.onGetUserStocks(userId);
   }
 }

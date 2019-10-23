@@ -1,14 +1,14 @@
-.column {
+/* .column {
   float: left;
   padding: 10px;
 
-}
+} */
 
-.row:after {
+/* .row:after {
   content: "";
   display: table;
   clear: both;
-}
+} */
 
 .container {
   display: flex;

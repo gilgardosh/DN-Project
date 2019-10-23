@@ -12,14 +12,8 @@ export const transactionController: RequestHandler = (req, res, next) => {
     if (buyOrSell === 'sell') {
       const query = {
         name: 'make-sell-transaction',
-        text: `
-        INSERT INTO public.user_trades(
-          user_id, stock_id, quantity, total_price, trade_type)
-          VALUES ($1,
-            (SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2),
-          -$3, -$4, 'Sold');
-        `,
-        values: [userId, stockSymbol, quantity, totalPrice],
+        text: ' INSERT INTO public.user_trades ( user_id, stock_id, quantity, total_price, trade_type) VALUES ($1,(SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2), $3, $4, $5);',
+        values: [userId, stockSymbol, -quantity, -totalPrice, 'Sold'],
       };
 
       database.query(query)
@@ -30,19 +24,12 @@ export const transactionController: RequestHandler = (req, res, next) => {
         res.status(401).json(responseHelper(err, false));
       });
     } else if (buyOrSell === 'buy') {
-      console.log("transaction Data", req.body);
       const query = {
         name: 'make-buy-transaction',
-        text: `
-        INSERT INTO public.user_trades(
-          user_id, stock_id, quantity, total_price, trade_type)
-          VALUES ($1,
-            (SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2),
-          $3, $4, 'Bought');
-        `,
-        values: [userId, stockSymbol, quantity, totalPrice],
+        text: ' INSERT INTO public.user_trades( user_id, stock_id, quantity, total_price, trade_type ) VALUES ($1,(SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2), $3, $4, $5);',
+        values: [userId, stockSymbol, quantity, totalPrice, 'Bought'],
       };
-
+      console.log(query);
       database.query(query)
       .then(data => {
         res.status(200).json(responseHelper(data).body.rows);

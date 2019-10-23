@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { ILiveStocks } from '../models/livestocks.interface';
 import { IUserData } from '../models/userdata.interface';
 import { IUserStocks } from '../models/userstocks.interface';
 import { IUserTradeData } from '../models/usertrade.interface';
@@ -20,8 +19,9 @@ export class HttpService {
 
   onLogin(body) {
     const url = `/login`;
-    return this.http.post<IHttpRequestHelper<IUserData>>(url, body)
-      .pipe(catchError(this.handleError));;
+    return this.http
+      .post<IHttpRequestHelper<IUserData>>(url, body)
+      .pipe(catchError(this.handleError));
   }
 
   onSignUp(body) {
@@ -29,21 +29,22 @@ export class HttpService {
     return this.http.post<IHttpRequestHelper<IUserData>>(url, body);
   }
 
-  onGetUserStocks(userId: number, stock_symbol: string) {
+  onGetUserStocks(userId: number) {
     const body = {
-      userId,
-      stock_symbol
+      userId
     };
     return this.http
       .post<IUserStocks[]>(`/userStocks`, body)
       .pipe(catchError(this.handleError));
   }
 
-  onMakeTransaction(stockSymbol: string,
-                    buyOrSell: string,
-                    quantity: number,
-                    totalPrice: number,
-                    userId: number) {
+  onMakeTransaction(
+    stockSymbol: string,
+    buyOrSell: string,
+    quantity: number,
+    totalPrice: number,
+    userId: number
+  ) {
     const body = {
       stockSymbol,
       buyOrSell,
@@ -51,35 +52,10 @@ export class HttpService {
       totalPrice,
       userId
     };
-    console.log("onMakeTransaction", body);
-
     return this.http
       .put<any>(`/transaction`, body)
       .pipe(catchError(this.handleError));
   }
-
-
-  // onMakeTransaction(
-  //   stockSymbol: string,
-  //   buyOrSell: string,
-  //   quantity: number,
-  //   totalPrice: number,
-  //   userId: number
-  // ) {
-  //   const body = {
-  //     stockSymbol,
-  //     buyOrSell,
-  //     quantity,
-  //     totalPrice,
-  //     userId
-  //   };
-  //   // console.log('transaction body: ' + JSON.stringify(body));
-
-  //   return this.http.put(`/transaction`, body).pipe(
-  //     tap(data => {}),
-  //     catchError(this.handleError)
-  //   );
-  // }
 
   onGetTrades(userId: number) {
     const body = {
