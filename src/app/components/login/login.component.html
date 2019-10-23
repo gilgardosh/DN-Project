@@ -1,4 +1,56 @@
 <form novalidate (ngSubmit)="onSubmit()" ngNativeValidate>
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+    <br />
+    <div *ngIf="errorMessage">
+      <div class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+      <div class="form-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput
+             [(ngModel)]="user.email"
+             name="email"
+             type="email"
+             required
+             class="form-control"
+             id="email"
+             placeholder="Enter Your Email" />
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput
+             [(ngModel)]="user.password"
+             name="password"
+             type="password"
+             required
+             class="form-control"
+             id="password"
+             placeholder="Enter a Password" />
+    </mat-form-field>
+  </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" type="submit">Submit</button
+    >&nbsp;&nbsp;
+    <a [routerLink]="['/']">
+      <button mat-raised-button color="warn" type="cancel">Cancel</button>
+    </a>
+  </mat-card-actions>
+  <p>
+    <span>Don't have an account?&nbsp;</span>
+    <a [routerLink]="['/signup']">Sign up!</a>
+  </p>
+</mat-card>
+</form>
+
+<!-- <form novalidate (ngSubmit)="onSubmit()" ngNativeValidate>
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
@@ -35,16 +87,5 @@
         />
       </div>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button
-      >&nbsp;&nbsp;
-      <a [routerLink]="['/']">
-        <button mat-raised-button color="warn" type="cancel">Cancel</button>
-      </a>
-    </mat-card-actions>
-    <p>
-      <span>Don't have an account?&nbsp;</span>
-      <a [routerLink]="['/signup']">Sign up!</a>
-    </p>
   </mat-card>
-</form>
+</form> -->

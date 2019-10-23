@@ -160,17 +160,21 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.form.value.quantity = Number(this.form.value.quantity);
+    let { quantity } = this.form.value;
+    quantity = Number(quantity);
     this.form.value.formTotalPrice =
-      this.form.value.formTotalPrice * this.form.value.quantity;
+      this.form.value.formTotalPrice * quantity;
     this.form.value.formStockSymbol = this.stockSymbol;
     console.log('transaction form value: ' + this.form.value);
     this.transactionService.makeTransaction(
       this.form.value.formStockSymbol,
       this.form.value.buysellselector,
-      this.form.value.quantity,
+      quantity,
       this.form.value.formTotalPrice
-    );
+    ).subscribe({
+      next: userStocks => { },
+      error: err => (this.errorMessage = err)
+    });
     // this.valueChanged.emit(this.form.value);
   }
 

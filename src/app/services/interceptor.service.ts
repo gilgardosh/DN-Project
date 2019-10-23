@@ -14,11 +14,14 @@ export class MainInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+
     // const reqClone = req.clone({
     //   ...req,
     //   url: environment.BASE_URL + req.url
     // });
 
-    return next.handle(req);
+    console.log("main interceptor", req.url);
+
+    return next.handle(req);  // if turning on - change to reqClone
   }
 }

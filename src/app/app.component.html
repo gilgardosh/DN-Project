@@ -1,49 +1,54 @@
-<nav class="navbar navbar-expand navbar-light bg-light">
-  <a class="navbar-brand">{{ pageTitle }}</a>
-  <ul class="nav nav-pills">
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>{{ pageTitle }}</span>
     <ng-container *ngIf="authService.isAuthorized | async; else isNotAuthRef">
-      <li>
-        <a
-          class="nav-link"
-          routerLinkActive="active"
-          [routerLink]="['/userwallet']"
-          >My Invetments</a
-        >
-      </li>
-      <li>
-        <a
-          class="nav-link"
-          routerLinkActive="active"
-          [routerLink]="['/tradehistory']"
-          >Trade History</a
-        >
-      </li>
-      <li>
-        <a
-          class="nav-link"
-          routerLinkActive="active"
-          [routerLink]="['/buysell']"
-          >Buy/Sell</a
-        >
-      </li>
-      <li>
-        <a class="nav-link" (click)="authService.logOut()">Logout</a>
-      </li>
+      <span class="small_spacer"></span>
+      <button mat-button
+              class="button"
+              routerLinkActive="active"
+              [routerLink]="['/userwallet']">
+        My Invetments
+      </button>
+      <span class="mini_spacer"></span>
+      <button mat-button
+              class="button"
+              routerLinkActive="active"
+              [routerLink]="['/tradehistory']">
+        Trade History
+      </button>
+      <span class="mini_spacer"></span>
+      <button mat-button
+              class="button"
+              routerLinkActive="active"
+              [routerLink]="['/buysell']">
+        Buy/Sell
+      </button>
+      <span class="spacer"></span>
+      <button mat-button
+              class="button"
+              (click)="authService.logOut()">
+        Logout
+      </button>
     </ng-container>
     <ng-template #isNotAuthRef>
-      <li>
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/login']"
-          >login</a
-        >
-      </li>
-      <li>
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/signup']"
-          >signup</a
-        >
-      </li>
+      <span class="spacer"></span>
+      <button mat-button
+              class="button"
+              routerLinkActive="active"
+              [routerLink]="['/login']">
+        login
+      </button>
+      <span class="mini_spacer"></span>
+      <button mat-button
+              class="button"
+              routerLinkActive="active"
+              [routerLink]="['/signup']">
+        signup
+      </button>
     </ng-template>
-  </ul>
-</nav>
+  </mat-toolbar-row>
+</mat-toolbar>
+
 <div class="container">
   <div class="column left">
     <pm-livestocks></pm-livestocks>

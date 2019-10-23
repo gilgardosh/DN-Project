@@ -10,7 +10,12 @@ export const userTradeHistoryController: RequestHandler = (req, res, next) => {
     const query = {
       name: 'fetch-trades-by-user-id',
       text:
-        'select * from public.user_trades ut join stocks s on s.stock_id = ut.stock_id where ut.user_id=$1',
+      `
+      INSERT INTO public.user_trades(
+        user_id, stock_id, quantity, total_price, trade_type)
+        VALUES (1, 1, 15, 1000, 'Bought');
+      `,
+      // 'select * from public.user_trades ut join stocks s on s.stock_id = ut.stock_id where ut.user_id=$1',
       values: [userId]
     };
     database

@@ -12,17 +12,19 @@ import { headersController } from './util/headers.util';
 import { getStocksList } from './util/stocks-list.util';
 
 import { tokenMiddleware } from './util/middleware/token.middleware';
-
+const morgan = require ('morgan');
 const app: express.Application = express();
 app.use(urlencoded({ limit: '500mb', extended: true }));
 app.use(headersController);
+app.use(morgan('dev'));
 app.use('/api', json({ limit: '500mb' }));
 app.use('/api/v1/login', loginRouter);
 // app.use(tokenMiddleware);
+app.use('/api/v1/transaction', transactionRouter);
 app.use('/api/v1/tradeHistory', tradesRouter);
 app.use('/api/v1/userStocks', userStocksRouter);
 app.use('/api/v1/stocksList', stocksListRouter);
-app.use('/api/v1/transaction', transactionRouter);
+
 
 const port = process.env.PORT || 4040;
 const server = require('http').createServer(app);

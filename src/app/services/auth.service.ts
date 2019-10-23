@@ -70,6 +70,6 @@ export class AuthService {
   logOut() {
     this.userDataService.cleanUserData();
     this.token = '';
-    this.router.navigate(['/userwallet']);
+    this.router.navigate(['/login']);
   }
 }

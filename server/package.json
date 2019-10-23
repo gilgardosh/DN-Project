@@ -17,6 +17,8 @@
     "iexcloud_api_wrapper": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "postgresql": "0.0.1",
     "socket.io": "^2.3.0",
     "ts-node-dev": "^1.0.0-pre.43",
     "uuid": "^3.3.3"

@@ -4,7 +4,7 @@ import { database } from './../util/database.util';
 
 export const transactionController: RequestHandler = (req, res, next) => {
 
-  console.log("transaction made");
+
   const { stockSymbol, buyOrSell, quantity, totalPrice, userId } = req.body;
 
   if (userId && totalPrice && quantity && buyOrSell && stockSymbol) {
@@ -17,7 +17,7 @@ export const transactionController: RequestHandler = (req, res, next) => {
           user_id, stock_id, quantity, total_price, trade_type)
           VALUES ($1,
             (SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2),
-          -$3, -%$4, 'Sold');
+          -$3, -$4, 'Sold');
         `,
         values: [userId, stockSymbol, quantity, totalPrice],
       };
@@ -30,6 +30,7 @@ export const transactionController: RequestHandler = (req, res, next) => {
         res.status(401).json(responseHelper(err, false));
       });
     } else if (buyOrSell === 'buy') {
+      console.log("transaction Data", req.body);
       const query = {
         name: 'make-buy-transaction',
         text: `

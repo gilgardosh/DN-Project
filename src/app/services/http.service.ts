@@ -20,8 +20,8 @@ export class HttpService {
 
   onLogin(body) {
     const url = `/login`;
-    console.log('login data: ' + body);
-    return this.http.post<IHttpRequestHelper<IUserData>>(url, body);
+    return this.http.post<IHttpRequestHelper<IUserData>>(url, body)
+      .pipe(catchError(this.handleError));;
   }
 
   onSignUp(body) {
@@ -39,11 +39,52 @@ export class HttpService {
       .pipe(catchError(this.handleError));
   }
 
+  onMakeTransaction(stockSymbol: string,
+                    buyOrSell: string,
+                    quantity: number,
+                    totalPrice: number,
+                    userId: number) {
+    const body = {
+      stockSymbol,
+      buyOrSell,
+      quantity,
+      totalPrice,
+      userId
+    };
+    console.log("onMakeTransaction", body);
+
+    return this.http
+      .put<any>(`/transaction`, body)
+      .pipe(catchError(this.handleError));
+  }
+
+
+  // onMakeTransaction(
+  //   stockSymbol: string,
+  //   buyOrSell: string,
+  //   quantity: number,
+  //   totalPrice: number,
+  //   userId: number
+  // ) {
+  //   const body = {
+  //     stockSymbol,
+  //     buyOrSell,
+  //     quantity,
+  //     totalPrice,
+  //     userId
+  //   };
+  //   // console.log('transaction body: ' + JSON.stringify(body));
+
+  //   return this.http.put(`/transaction`, body).pipe(
+  //     tap(data => {}),
+  //     catchError(this.handleError)
+  //   );
+  // }
+
   onGetTrades(userId: number) {
     const body = {
       userId
     };
-
     return this.http
       .post<IUserTradeData[]>(`/tradeHistory`, body)
       .pipe(catchError(this.handleError));
@@ -54,27 +95,6 @@ export class HttpService {
       tap(data => {}),
       catchError(this.handleError)
     );
-  }
-
-  onMakeTransaction(
-    stockSymbol: string,
-    buyOrSell: string,
-    quantity: number,
-    totalPrice: number,
-    userId: number
-  ) {
-    const body = {
-      stockSymbol,
-      buyOrSell,
-      quantity,
-      totalPrice,
-      userId
-    };
-    console.log('transaction body: ' + body);
-
-    return this.http
-      .post<any>(`/transaction`, body)
-      .pipe(catchError(this.handleError));
   }
 
   private handleError(err: HttpErrorResponse) {

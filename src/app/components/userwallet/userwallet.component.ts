@@ -24,7 +24,6 @@ export class UserwalletComponent implements OnInit, OnDestroy {
     const stock$ = this.userStocksService.getStocks().subscribe({
       next: userStocks => {
         this.userStocks = userStocks;
-        console.log('User Stocks: ' + JSON.stringify(this.userStocks));
       },
       error: err => (this.errorMessage = err)
     });

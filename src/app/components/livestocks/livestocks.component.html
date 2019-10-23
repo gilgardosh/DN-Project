@@ -1,8 +1,8 @@
-<div class="card">
-  <div class="card-header">
-    {{ pageTitle }}
-  </div>
-  <div class="card-body">
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>{{ pageTitle }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
     <div class="table-responsive">
       <ng-container *ngIf="!!(liveStocks$ | async); else loaderRef">
         <table class="table">
@@ -81,8 +81,5 @@
         <mat-spinner></mat-spinner>
       </ng-template>
     </div>
-  </div>
-</div>
-<div *ngIf="errorMessage" class="alert alert-danger">
-  Error: {{ errorMessage }}
-</div>
+  </mat-card-content>
+</mat-card>

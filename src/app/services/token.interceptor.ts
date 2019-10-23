@@ -16,6 +16,9 @@ export class TokenInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+
+
+console.log("token interceptor");
     const token: string = this.authService.token;
     let req;
     const options: any = {};
@@ -54,6 +57,10 @@ export class ErrorInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+
+
+    console.log("error interceptor");
+
     return next.handle(request);
     // .pipe(
     //   ca

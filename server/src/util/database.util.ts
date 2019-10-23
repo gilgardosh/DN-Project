@@ -1,6 +1,6 @@
 import { Client } from 'pg';
 
-const connectionString = "postgres://postgres:postgres@localhost:5432/dnproject";
+const connectionString = 'postgres://server:postgres@localhost:5432/dnproject';
 
 export const database = new Client({
   connectionString: connectionString

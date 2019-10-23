@@ -15,15 +15,15 @@ export class TransactionService {
     stockSymbol: string,
     buyOrSell: string,
     quantity: number,
-    totalPrice: number
+    total_price: number,
   ) {
-    const userId = this.userDataService.getUserId();
+    const user_id = this.userDataService.getUserId();
     return this.http.onMakeTransaction(
       stockSymbol,
       buyOrSell,
       quantity,
-      totalPrice,
-      userId
+      total_price,
+      user_id
     );
   }
 }
