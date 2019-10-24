@@ -78,8 +78,30 @@ export class SignupComponent implements OnInit {
       )
       .subscribe(
         user => {
-          this.router.navigate(['/']);
           this.errorMessage = null;
+
+          this.authService.logIn(payload.email, payload.password).subscribe(
+            user => {
+              this.errorMessage = null;
+
+              this.authService.initUser().subscribe(
+                user => {
+                  this.errorMessage = null;
+                  this.router.navigate(['']);
+                },
+                (e: HttpErrorResponse) => {
+                  this.errorMessage = e.message;
+                }
+              );
+
+              this.router.navigate(['']);
+            },
+            (e: HttpErrorResponse) => {
+              this.errorMessage = e.message;
+            }
+          );
+
+          this.router.navigate(['']);
         },
         (e: HttpErrorResponse) => {
           this.errorMessage = e.message;

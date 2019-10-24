@@ -67,6 +67,14 @@ export class AuthService {
     );
   }
 
+  initUser(): Observable<IUserData> {
+    const userId = this.userDataService.getUserId();
+    return this.http.onInitUser({ userId }).pipe(
+      map(res => res.body),
+      tap(data => {})
+    );
+  }
+
   logOut() {
     this.userDataService.cleanUserData();
     this.token = '';

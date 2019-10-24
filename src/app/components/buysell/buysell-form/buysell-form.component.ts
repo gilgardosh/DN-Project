@@ -192,7 +192,6 @@ export class BuysellFormComponent implements OnInit, OnDestroy {
         error: err => (this.errorMessage = err)
       });
     this.router.navigate(['/buysell']);
-    // this.valueChanged.emit(this.form.value);
   }
 
   ngOnDestroy() {

@@ -62,14 +62,5 @@ export class ErrorInterceptor implements HttpInterceptor {
     console.log("error interceptor");
 
     return next.handle(request);
-    // .pipe(
-    //   ca
-    // )
-    // .catch((response: any) => {
-    //   if (response instanceof HttpErrorResponse && response.status === 401) {
-    //     console.log(response);
-    //   }
-    //   return Observable.throw(response);
-    // });
   }
 }

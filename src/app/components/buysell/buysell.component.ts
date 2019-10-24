@@ -22,28 +22,13 @@ export class BuysellComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    // private authService: AuthService,
     private stocksListService: StocksListService
   ) {}
 
   ngOnInit() {
     this.initStocksList$();
     this.initParam$();
-    // this.isAuthorized$();
   }
-
-  // isAuthorized$() {
-  //   const auth$ = this.authService.isNotAuthorized
-  //     .pipe(filter(authStatus => authStatus))
-  //     .subscribe(notAuth => {
-  //       console.log('notAuth: ', notAuth);
-  //     });
-  //   this.subscription.add(auth$);
-  // }
-
-  // onValueChanged(values: IForm) {
-  //   console.log('value is here: ', values);
-  // }
 
   initParam$() {
     const param$ = this.route.paramMap.subscribe(param => {

@@ -4,12 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const user_stocks_controller_1 = require("../controllers/user-stocks.controller");
 const router = express_1.default.Router();
-router.get('/:userId', (req, res, next) => {
-    // http://localhost:4040/api/v1/users/{{ userId }}
-    const { userId } = req.params;
-    res.json({
-      userID3
-    });
-});
+router.post('/', user_stocks_controller_1.userStocksController);
 exports.default = router;

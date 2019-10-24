@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-// import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'pm-login',
@@ -27,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.authService.logIn(payload.email, payload.password).subscribe(
       user => {
         this.errorMessage = null;
-        this.router.navigate(['/']);
+        this.router.navigate(['']);
       },
       (e: HttpErrorResponse) => {
         this.errorMessage = e.message;

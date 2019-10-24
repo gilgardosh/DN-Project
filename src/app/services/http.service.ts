@@ -26,8 +26,12 @@ export class HttpService {
 
   onSignUp(body) {
     const url = `/signup`;
-    console.log('signup: '+ JSON.stringify(body));
-    return this.http.put<IHttpRequestHelper<any>>(url, body);
+    return this.http.post<IHttpRequestHelper<IUserData>>(url, body);
+  }
+
+  onInitUser(body) {
+    const url = `/inituser`;
+    return this.http.post<IHttpRequestHelper<any>>(url, body);
   }
 
   onGetUserStocks(userId: number) {

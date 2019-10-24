@@ -10,7 +10,6 @@ export const transactionTradesController: RequestHandler = (req, res, next) => {
   if (userId && totalPrice && quantity && buyOrSell && stockSymbol) {
 
     if (buyOrSell === 'sell') {
-      // add to trade history table:
       const query = {
         name: 'make-sell-transaction-on-trade-table',
         text: ' INSERT INTO public.user_trades ( user_id, stock_id, quantity, total_price, trade_type) VALUES ($1,(SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2), $3, $4, $5);',
@@ -27,7 +26,6 @@ export const transactionTradesController: RequestHandler = (req, res, next) => {
       });
 
     } else if (buyOrSell === 'buy') {
-      // add to trade history table:
       const query = {
         name: 'make-buy-transaction-on-trade-table',
         text: ' INSERT INTO public.user_trades( user_id, stock_id, quantity, total_price, trade_type ) VALUES ($1,(SELECT stock_id FROM public.stocks s WHERE s.stock_symbol = $2), $3, $4, $5);',

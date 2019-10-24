@@ -16,11 +16,11 @@ export const loginController: RequestHandler = (req, res, next) => {
     database
       .query(query)
       .then(data => {
+        console.log(data)
         const user = data.rows[0];
         const token = sign(user || {}, secret, {
           expiresIn: '24h'
         });
-        // console.log(token, data);
         setTokenOnHeader(res, token);
         res.status(200).json(responseHelper(user));
       })

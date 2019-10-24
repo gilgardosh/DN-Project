@@ -13,9 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LivestocksComponent implements OnInit, OnDestroy {
   public pageTitle = 'Live Stocks Update';
   private subscription = new Subscription();
-  errorMessage = '';
   liveStocks$: Observable<IAPIStocks[]>;
-  index: IAPIStocks[];
 
   constructor(
     public liveStocksService: LiveStocksService,

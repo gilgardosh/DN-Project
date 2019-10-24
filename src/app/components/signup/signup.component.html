@@ -2,12 +2,6 @@
   <mat-card class="card">
     <mat-card-header>
       <mat-card-title>Signup</mat-card-title>
-      <br />
-      <div *ngIf="errorMessage">
-        <div class="alert alert-danger" role="alert">
-          {{ errorMessage }}
-        </div>
-      </div>
     </mat-card-header>
     <mat-card-content>
       <div class="signupFormGroup">
@@ -55,7 +49,9 @@
           />
         </mat-form-field>
         <br />
-        <button mat-button [disabled]="!isFormValid" (click)="onSubmit()">Confirm</button>
+        <button mat-button [disabled]="!isFormValid" (click)="onSubmit()">
+          Confirm
+        </button>
       </div>
     </mat-card-content>
     <mat-card-actions>
@@ -71,42 +67,10 @@
       <a [routerLink]="['/login']">Log in!</a>
     </p>
   </mat-card>
-</form>
-
-<!-- <div class="row">
-  <div class="col-md-4">
-    <h1>Sign up</h1>
-    <hr />
-
-
-    <form (ngSubmit)="onSubmit()" ngNativeValidate>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          [(ngModel)]="user.email"
-
-          class="form-control"
-
-        />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          [(ngModel)]="user.password"
-          name="password"
-          type="password"
-          required
-          class="form-control"
-          id="password"
-          placeholder="enter a password"
-        />
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-      <a [routerLink]="['/']" class="btn btn-success">Cancel</a>
-    </form>
-    <p>
-      <span>Already have an account?&nbsp;</span>
-      <a [routerLink]="['/login']">Log in!</a>
-    </p>
+  <br />
+  <div *ngIf="errorMessage">
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
   </div>
-</div> -->
+</form>

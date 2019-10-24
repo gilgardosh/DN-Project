@@ -6,14 +6,12 @@ export const signupController: RequestHandler = (req, res, next) => {
   const { email, password, first_name, last_name } = req.body;
   console.log(req.body);
   if (email && password && first_name && last_name) {
-    // add to trade history table:
     const query = {
       name: 'signup-new-user',
       text:
-        ' INSERT INTO public.users( first_name, last_name, email, password ) VALUES ($1, $2, $3, $4);',
+        ' INSERT INTO public.users( first_name, last_name, email, password ) VALUES ($3, $4,$1, $2);',
       values: [email, password, first_name, last_name]
     };
-    console.log(query);
     database
       .query(query)
       .then(data => {

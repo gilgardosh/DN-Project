@@ -3,6 +3,7 @@ import express from 'express';
 import { Socket } from 'socket.io';
 import loginRouter from './routes/login.routing';
 import signupRouter from './routes/signup.routing';
+import initUserRouter from './routes/inituser.routing';
 import tradesRouter from './routes/trades.routing';
 import userStocksRouter from './routes/userstocks.routing';
 import stocksListRouter from './routes/stockslist.routing';
@@ -12,10 +13,11 @@ import { quotes } from './stock';
 import { database } from './util/database.util';
 import { headersController } from './util/headers.util';
 import { getStocksList } from './util/stocks-list.util';
-
 // import { tokenMiddleware } from './util/middleware/token.middleware';
+
 const morgan = require ('morgan');
 const app: express.Application = express();
+
 app.use(urlencoded({ limit: '500mb', extended: true }));
 app.use(headersController);
 app.use(morgan('dev'));
@@ -23,6 +25,7 @@ app.use('/api', json({ limit: '500mb' }));
 app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/signup', signupRouter);
 // app.use(tokenMiddleware);
+app.use('/api/v1/inituser', initUserRouter);
 app.use('/api/v1/transaction1', transaction1Router);
 app.use('/api/v1/transaction2', transaction2Router);
 app.use('/api/v1/tradeHistory', tradesRouter);

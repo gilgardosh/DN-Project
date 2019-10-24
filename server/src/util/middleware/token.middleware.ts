@@ -4,11 +4,9 @@ import { responseHelper } from '../response.util';
 import { secret } from '../secret';
 
 export const tokenMiddleware: RequestHandler = (req, res, next) => {
-  // console.log(req.body);
 
   try {
     let token = req.headers['Authorization'] as string;
-    // console.log(token);
 
     if (token && token.startsWith('Bearer ')) {
       // Remove Bearer from string
@@ -17,7 +15,6 @@ export const tokenMiddleware: RequestHandler = (req, res, next) => {
       throw new Error('Not Auth');
     }
     const isValid = verify(token, secret);
-    // console.log(isValid);
 
     next();
   } catch (e) {
