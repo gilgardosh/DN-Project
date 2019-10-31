@@ -20,6 +20,7 @@ export class LiveStocksService extends Socket {
       }
     });
     this.subscribeToMessage('stocksupdate').subscribe(value => {
+      console.log('stocksData: '+JSON.stringify(value));
       this.stocks$.next(value);
     });
   }

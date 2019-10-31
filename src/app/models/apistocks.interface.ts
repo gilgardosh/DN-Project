@@ -31,7 +31,7 @@ export interface IAPIStocks {
   latestVolume: number;
   low: number;
   marketCap: number;
-  open: number;
+  open: number  ;
   openTime: number;
   peRatio: number;
   previousClose: number;

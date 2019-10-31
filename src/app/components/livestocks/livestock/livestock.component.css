@@ -1,0 +1,56 @@
+.stock_upper {
+  margin-top: 15px;
+  display: block;
+  width: 400px;
+  /* min-height: 80px; */
+}
+
+.stock_type{
+  display: inline-block;
+  margin-right: 10px;
+  width: 120px;
+}
+
+.type_symbol {
+  font-size: 20px;
+}
+
+.type_name {
+  font-size: 14px;
+}
+
+.stock_val {
+  display: inline-block;
+  font-size: 28px;
+  margin-left: 5px;
+  margin-right: 10px;
+  width: 120px;
+  vertical-align: baseline;
+}
+
+.stock_change {
+  display: inline-block;
+  margin-left: 10px;
+  width: 80px;
+}
+
+.change_nums {
+  display: inline-block;
+  font-size: 14px;
+  width: 50px;
+}
+
+.change_icon {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.data_column {
+  width: 30%;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.data_box {
+  margin-top: 10px;
+}

@@ -1,0 +1,61 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header expandedHeight="auto  " collapsedHeight="70px">
+    <div class="stock_upper">
+      <div class="stock_type">
+        <div class="type_symbol">{{ stock.symbol }}</div>
+        <div class="type_name">{{ stock.companyName }}</div>
+      </div>
+      <div class="stock_val">
+        {{ stock.latestPrice | currency: 'USD':'symbol':'1.2-2' }}
+      </div>
+      <div class="stock_change">
+        <div class="change_nums">
+          {{ stock.change | number: '1.2-2' }}<br />{{
+            stock.changePercent | percent: '1.2-2'
+          }}
+        </div>
+        <div class="change_icon">
+          <img
+            *ngIf="0 > stock.change"
+            src="../../../..//assets/images/loss.gif"
+            Width="30"
+            Margins="2"
+          />
+          <img
+            *ngIf="stock.change > 0"
+            src="../../../../assets/images/gain.gif"
+            Width="30"
+            Margins="2"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- <mat-panel-title>
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description> -->
+  </mat-expansion-panel-header>
+  <div class="stock_lower">
+    <div class="data_column">
+      <div class="data_box">prev. Close: {{stock.previousClose}}</div>
+      <hr>
+      <div class="data_box">Open: {{stock.open}}</div>
+      <hr>
+      <div class="data_box"></div>
+    </div>
+    <div class="data_column">
+        <div class="data_box">High: {{stock.high}}</div>
+        <hr>
+        <div class="data_box">Low: {{stock.low}}</div>
+        <hr>
+    </div>
+    <div class="data_column">
+        <div class="data_box">52w. High: {{stock.week52High}}</div>
+        <hr>
+        <div class="data_box">52w. Low: {{stock.week52Low}}</div>
+        <hr>
+
+    </div>
+  </div>
+</mat-expansion-panel>

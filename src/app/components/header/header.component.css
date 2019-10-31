@@ -1,0 +1,8 @@
+.flex-spacer {
+  flex-grow: 1;
+}
+
+.app-logo {
+  padding-right: 16px;
+  padding-left: 6px;
+}

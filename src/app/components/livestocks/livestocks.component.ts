@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./livestocks.component.css']
 })
 export class LivestocksComponent implements OnInit, OnDestroy {
+  panelOpenState: boolean = false;
   public pageTitle = 'Live Stocks Update';
   private subscription = new Subscription();
   liveStocks$: Observable<IAPIStocks[]>;

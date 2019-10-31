@@ -1,4 +1,16 @@
-<mat-card class="card">
+<div class="livestocksbar">
+  <div class="livestockscontent">
+    <mat-accordion>
+      <pm-livestock
+        *ngFor="let stockEl of liveStocks$ | async"
+        [stock]="stockEl"
+      >
+      </pm-livestock>
+    </mat-accordion>
+  </div>
+</div>
+
+<!-- <mat-card class="card">
   <mat-card-header>
     <mat-card-title>{{ pageTitle }}</mat-card-title>
   </mat-card-header>
@@ -46,7 +58,7 @@
               >
                 {{ stock.change }}
                 <br />
-                ({{ stock.changePercent | percent }})
+                ({{ stock.changePercent | percent:'1.2-2' }})
               </td>
               <td>
                 <img
@@ -83,3 +95,4 @@
     </div>
   </mat-card-content>
 </mat-card>
+ -->

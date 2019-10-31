@@ -22,6 +22,8 @@ import { AuthService } from './services/auth.service';
 import { MainInterceptor } from './services/interceptor.service';
 import { TokenInterceptor } from './services/token.interceptor';
 import { SharedModule } from './shared/shared.module';
+import { HeaderComponent } from './components/header/header.component';
+import { LivestockComponent } from './components/livestocks/livestock/livestock.component';
 
 
 
@@ -35,7 +37,9 @@ import { SharedModule } from './shared/shared.module';
     BuysellFormComponent,
     BuysellSelectComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    HeaderComponent,
+    LivestockComponent
   ],
   imports: [
     BrowserModule,

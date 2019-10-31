@@ -1,27 +1,51 @@
-.column {
+app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.body-livestocksbar-innercontent {
+  min-width: 1000px;
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 100%;
+}
+
+.innercontent {
+  display: flex;
+  flex-grow: 1;
+  margin: 25px;
+}
+
+.seprow {
+  height: 80px;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+
+
+
+/* .column {
   float: left;
   padding: 2%;
 
-}
+} */
 
-.row:after {
+/* .row:after {
   content: "";
   display: table;
   clear: both;
-}
+} */
 
-.container {
+/* .container {
   display: flex;
-}
+} */
 
-.spacer {
-  flex: 10 1 80%;
-}
 
-.small_spacer {
-  flex: 1 1 2%;
-}
 
-.mini_spacer {
-  flex: 1 1 1%;
-}
+
+
