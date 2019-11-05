@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
   errorMessage: string | null;
   user = {
@@ -24,11 +25,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(): void {
-    const payload = {
-      email: this.user.email,
-      password: this.user.password
-    };
-    this.authService.logIn(payload.email, payload.password).subscribe(
+    this.authService.logIn(this.user.email, this.user.password).subscribe(
       user => {
         this.errorMessage = null;
         const msg = 'Wellcome, '+user.first_name+' '+user.last_name+'!';

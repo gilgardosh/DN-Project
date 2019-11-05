@@ -3,6 +3,9 @@
     <mat-card-title>{{ pageTitle }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
+    <div class="filter_input">
+        Filter: <input matInput placeholder="Stock Filter" value="" [(ngModel)]="stockfilter">
+    </div>
     <div class="table-responsive">
       <ng-container *ngIf="userTrades && userTrades.length; else loaderRef">
         <table class="table">
@@ -16,9 +19,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let trade of userTrades">
-              <td>{{ trade.trade_date | date: 'medium' }}</td>
-              <td>
+            <tr *ngFor="let trade of userTrades | stockfilter:stockfilter">
+                <td>{{ trade.trade_date }}</td>
+                <td>
                 <a [routerLink]="['/buysell', trade.stock_symbol]">
                   {{ trade.stock_name }}
                 </a>

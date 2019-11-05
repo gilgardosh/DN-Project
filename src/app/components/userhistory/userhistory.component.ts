@@ -8,6 +8,7 @@ import { IUserTradeData } from '../../models/usertrade.interface';
   styleUrls: ['./userhistory.component.css']
 })
 export class UserhistoryComponent implements OnInit {
+  stockfilter = '';
   public pageTitle = 'User Trade History';
   errorMessage = '';
 
